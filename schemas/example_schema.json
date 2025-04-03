@@ -1,0 +1,153 @@
+{
+  "customer_id": {
+    "dtype": "int",
+    "description": "Уникальный идентификатор клиента",
+    "required": true,
+    "example": "123456",
+    "impala_data_type": "INT",
+    "pg_data_type": "integer",
+    "domain": "Идентификаторы"
+  },
+  "full_name": {
+    "dtype": "category",
+    "description": "Полное имя клиента",
+    "required": true,
+    "example": "Иванов Иван Иванович",
+    "impala_data_type": "STRING",
+    "pg_data_type": "character varying",
+    "domain": "Клиентские данные",
+    "personal_data": true
+  },
+  "birth_date": {
+    "dtype": "datetime",
+    "description": "Дата рождения клиента",
+    "required": true,
+    "example": "1990-01-01",
+    "impala_data_type": "TIMESTAMP",
+    "pg_data_type": "date",
+    "domain": "Клиентские данные",
+    "personal_data": true
+  },
+  "salary": {
+    "dtype": "float",
+    "description": "Ежемесячная заработная плата",
+    "required": false,
+    "example": "120000.50",
+    "impala_data_type": "DOUBLE",
+    "pg_data_type": "numeric",
+    "domain": "Финансовые показатели",
+    "personal_data": true
+  },
+  "credit_score": {
+    "dtype": "int",
+    "description": "Кредитный скоринговый балл",
+    "required": false,
+    "example": "750",
+    "impala_data_type": "INT",
+    "pg_data_type": "smallint",
+    "domain": "Скоринговые показатели",
+    "min_value": 300,
+    "max_value": 850
+  },
+  "risk_category": {
+    "dtype": "category",
+    "description": "Категория риска клиента",
+    "required": true,
+    "example": "Low",
+    "impala_data_type": "STRING",
+    "pg_data_type": "character varying",
+    "domain": "Риск-показатели",
+    "allowed_values": ["Low", "Medium", "High", "Very High"]
+  },
+  "is_active": {
+    "dtype": "bool",
+    "description": "Признак активности клиента",
+    "required": true,
+    "example": "true",
+    "impala_data_type": "BOOLEAN",
+    "pg_data_type": "boolean",
+    "domain": "Статусы"
+  },
+  "registration_date": {
+    "dtype": "datetime",
+    "description": "Дата регистрации клиента",
+    "required": true,
+    "example": "2022-05-15 10:30:00",
+    "impala_data_type": "TIMESTAMP",
+    "pg_data_type": "timestamp without time zone",
+    "domain": "Временные показатели"
+  },
+  "last_update": {
+    "dtype": "datetime",
+    "description": "Дата последнего обновления данных",
+    "required": false,
+    "example": "2023-11-10 15:45:23",
+    "impala_data_type": "TIMESTAMP",
+    "pg_data_type": "timestamp without time zone",
+    "domain": "Временные показатели"
+  },
+  "city": {
+    "dtype": "category",
+    "description": "Город проживания",
+    "required": false,
+    "example": "Москва",
+    "impala_data_type": "STRING",
+    "pg_data_type": "character varying",
+    "domain": "Географические данные"
+  },
+  "transactions_count": {
+    "dtype": "int",
+    "description": "Количество транзакций клиента",
+    "required": false,
+    "example": "257",
+    "impala_data_type": "INT",
+    "pg_data_type": "integer",
+    "domain": "Транзакционные показатели"
+  },
+  "avg_transaction_amount": {
+    "dtype": "float",
+    "description": "Средняя сумма транзакции",
+    "required": false,
+    "example": "5432.78",
+    "impala_data_type": "DOUBLE",
+    "pg_data_type": "numeric",
+    "domain": "Транзакционные показатели"
+  },
+  "segment": {
+    "dtype": "category",
+    "description": "Сегмент клиента",
+    "required": true,
+    "example": "Mass",
+    "impala_data_type": "STRING",
+    "pg_data_type": "character varying",
+    "domain": "Сегментация",
+    "allowed_values": ["Mass", "Upper Mass", "Affluent", "Private"]
+  },
+  "has_credit_card": {
+    "dtype": "bool",
+    "description": "Наличие кредитной карты",
+    "required": false,
+    "example": "true",
+    "impala_data_type": "BOOLEAN",
+    "pg_data_type": "boolean",
+    "domain": "Продуктовые показатели"
+  },
+  "has_debit_card": {
+    "dtype": "bool",
+    "description": "Наличие дебетовой карты",
+    "required": false,
+    "example": "true",
+    "impala_data_type": "BOOLEAN",
+    "pg_data_type": "boolean",
+    "domain": "Продуктовые показатели"
+  },
+  "has_deposit": {
+    "dtype": "bool",
+    "description": "Наличие депозита",
+    "required": false,
+    "example": "false",
+    "impala_data_type": "BOOLEAN",
+    "pg_data_type": "boolean",
+    "domain": "Продуктовые показатели"
+  }
+} 
