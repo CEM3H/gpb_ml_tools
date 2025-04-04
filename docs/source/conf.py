@@ -24,7 +24,19 @@ templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # -- Options for HTML output -------------------------------------------------
-html_theme = 'sphinx_rtd_theme'
+html_theme = 'alabaster'
+html_theme_options = {
+    'logo': 'logo.png',  # Если у вас есть логотип
+    'github_user': 'CEM3H',
+    'github_repo': 'gpb_ml_tools',
+    'github_button': True,
+    'github_type': 'star',
+    'description': 'Библиотека машинного обучения для GPB',
+    'fixed_sidebar': True,
+    'sidebar_collapse': False,
+    'show_powered_by': False,
+    'show_relbars': True,
+}
 html_static_path = ['_static']
 
 # -- Extension configuration -------------------------------------------------
