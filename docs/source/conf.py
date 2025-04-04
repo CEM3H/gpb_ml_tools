@@ -3,6 +3,11 @@
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
+# -- Path setup --------------------------------------------------------------
+import os
+import sys
+sys.path.insert(0, os.path.abspath('../..'))
+
 # -- Project information -----------------------------------------------------
 project = 'GPB Library'
 copyright = '2024, GPB Team'
@@ -24,18 +29,17 @@ templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # -- Options for HTML output -------------------------------------------------
-html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
 html_theme_options = {
-    'logo': 'logo.png',  # Если у вас есть логотип
-    'github_user': 'CEM3H',
-    'github_repo': 'gpb_ml_tools',
-    'github_button': True,
-    'github_type': 'star',
-    'description': 'Библиотека машинного обучения для GPB',
-    'fixed_sidebar': True,
-    'sidebar_collapse': False,
-    'show_powered_by': False,
-    'show_relbars': True,
+    'navigation_depth': 4,
+    'collapse_navigation': False,
+    'sticky_navigation': True,
+    'includehidden': True,
+    'titles_only': False,
+    'logo_only': False,
+    'display_version': True,
+    'prev_next_buttons_location': 'bottom',
+    'style_external_links': True,
 }
 html_static_path = ['_static']
 
@@ -68,4 +72,17 @@ intersphinx_mapping = {
     'numpy': ('https://numpy.org/doc/stable/', None),
     'pandas': ('https://pandas.pydata.org/docs/', None),
     'scikit-learn': ('https://scikit-learn.org/stable/', None),
-} 
+}
+
+# Настройки для Read the Docs
+# https://docs.readthedocs.io/en/stable/faq.html#i-get-import-errors-on-libraries-that-depend-on-c-modules
+autodoc_mock_imports = [
+    'numpy',
+    'pandas',
+    'scikit-learn',
+    'sklearn',
+    'matplotlib',
+    'seaborn',
+    'impyla',
+    'psycopg2',
+] 
