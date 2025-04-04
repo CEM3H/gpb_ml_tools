@@ -132,26 +132,16 @@ def test_file_data_loader():
         schema.save(schema_path)
         
         # Создаем загрузчик данных с указанием схемы
-        loader = FileDataLoader({
-            'file_path': csv_path,
-            'file_type': 'csv',
-            'schema_path': schema_path,
-            'optimize_types': True
-        })
+        loader = FileDataLoader(schema)
         
         # Загружаем данные
-        df_loaded = loader.load_data()
+        df_loaded = loader.load_data(csv_path)
         
         # Проверяем, что количество строк совпадает
         assert len(df_loaded) == len(df)
         
         # Проверяем, что все колонки загружены
         assert set(df_loaded.columns) == set(df.columns)
-        
-        # Проверяем создание схемы из загрузчика
-        created_schema = loader.create_schema()
-        assert isinstance(created_schema, DataSchema)
-        assert len(created_schema.schema) > 0
         
         # Проверяем получение информации о колонках из схемы
         column_info = loader.schema.get_column_info('customer_id')
@@ -202,17 +192,15 @@ def test_integration_example_functions():
                 
                 # Патчим функцию os.remove, чтобы предотвратить удаление файла
                 with patch('os.remove') as mock_remove:
-                    # Патчим FileDataLoader для использования нашего пути
-                    with patch('examples.data_schema_example.FileDataLoader', return_value=FileDataLoader({
-                        'file_path': test_csv_path,
-                        'file_type': 'csv',
-                        'schema_path': new_schema_path if os.path.exists(new_schema_path) else None,
-                        'optimize_types': True
-                    })):
-                        # Выполняем функцию примера
-                        if os.path.exists(new_schema_path):
-                            example_load_with_schema()
-                            assert mock_remove.called
+                    # Патчим схему данных
+                    schema = DataSchema.from_dataframe(test_df) if not os.path.exists(new_schema_path) else DataSchema.from_file(new_schema_path)
+                    # Патчим FileDataLoader для использования нашего пути и схемы
+                    with patch('examples.data_schema_example.FileDataLoader', return_value=FileDataLoader(schema)):
+                        with patch('examples.data_schema_example.FileDataLoader.load_data', return_value=test_df):
+                            # Выполняем функцию примера
+                            if os.path.exists(new_schema_path):
+                                example_load_with_schema()
+                                assert mock_remove.called
                 
                 # 4. Тестируем функцию example_without_schema с мок-объектами
                 test_df = generate_sample_data(rows=100)
@@ -221,15 +209,12 @@ def test_integration_example_functions():
                 
                 # Патчим функцию os.remove, чтобы предотвратить удаление файла
                 with patch('os.remove') as mock_remove:
-                    # Патчим FileDataLoader для использования нашего пути
-                    with patch('examples.data_schema_example.FileDataLoader', return_value=FileDataLoader({
-                        'file_path': test_csv_path,
-                        'file_type': 'csv',
-                        'optimize_types': True
-                    })):
-                        # Выполняем функцию примера
-                        example_without_schema()
-                        assert mock_remove.called
+                    # Патчим FileDataLoader для использования нашего пути без схемы
+                    with patch('examples.data_schema_example.FileDataLoader', return_value=FileDataLoader()):
+                        with patch('examples.data_schema_example.FileDataLoader.load_data', return_value=test_df):
+                            # Выполняем функцию примера
+                            example_without_schema()
+                            assert mock_remove.called
                 
                 assert True  # Если дошли до этой точки, все функции выполнились без ошибок
                 

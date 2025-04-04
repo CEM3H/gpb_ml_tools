@@ -45,10 +45,7 @@ def feature_names(test_data):
 @pytest.fixture(scope="session")
 def data_loader():
     """Фикстура для загрузчика данных"""
-    return FileDataLoader({
-        'file_path': 'test_data.csv',
-        'file_type': 'csv'
-    })
+    return FileDataLoader()
 
 @pytest.fixture(scope="session")
 def preprocessor(feature_names):

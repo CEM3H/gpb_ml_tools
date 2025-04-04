@@ -39,10 +39,7 @@ def test_data():
 @pytest.fixture
 def data_loader():
     """Фикстура для загрузчика данных"""
-    return FileDataLoader({
-        'file_path': 'test_data.csv',
-        'file_type': 'csv'
-    })
+    return FileDataLoader()
 
 @pytest.fixture
 def preprocessor():
@@ -82,7 +79,7 @@ def model():
 def test_data_loader(data_loader, test_data):
     """Тест загрузчика данных"""
     # Загрузка данных
-    data = data_loader.load_data()
+    data = data_loader.load_data('test_data.csv')
     
     # Проверка результата
     assert isinstance(data, pd.DataFrame)

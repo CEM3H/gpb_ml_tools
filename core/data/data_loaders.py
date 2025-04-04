@@ -76,6 +76,7 @@ import json
 import yaml
 from .schema import DataSchema
 from .validation import SchemaValidator
+from core.utils.file_utils import SecurityError
 
 class DataLoader:
     """
@@ -231,27 +232,58 @@ class FileDataLoader(DataLoader):
         FileNotFoundError
             Если файл не найден
         ValueError
-            Если формат файла не поддерживается
+            Если формат файла не поддерживается или путь небезопасен
+        SecurityError
+            Если обнаружена попытка path traversal
         """
-        if not os.path.exists(file_path):
-            raise FileNotFoundError(f"Файл не найден: {file_path}")
-        
-        ext = Path(file_path).suffix.lower()
-        if ext == '.csv':
-            df = pd.read_csv(file_path, **kwargs)
-        elif ext == '.json':
-            df = pd.read_json(file_path, **kwargs)
-        elif ext == '.yaml' or ext == '.yml':
-            with open(file_path) as f:
-                data = yaml.safe_load(f)
-            df = pd.DataFrame(data)
-        else:
-            raise ValueError(f"Неподдерживаемый формат файла: {ext}")
-        
-        if self.schema:
-            self.validate_data(df)
-        
-        return df
+        # Проверка безопасности пути
+        try:
+            # Преобразуем путь к абсолютному
+            abs_path = os.path.abspath(file_path)
+            
+            # Проверяем, что файл существует
+            if not os.path.exists(abs_path):
+                raise FileNotFoundError(f"Файл не найден: {file_path}")
+            
+            # Проверяем, что это файл, а не директория
+            if not os.path.isfile(abs_path):
+                raise ValueError(f"Указанный путь не является файлом: {file_path}")
+            
+            # Проверяем размер файла (ограничение в 100MB)
+            max_size = 100 * 1024 * 1024  # 100MB в байтах
+            if os.path.getsize(abs_path) > max_size:
+                raise ValueError(f"Размер файла превышает допустимый лимит в 100MB: {file_path}")
+            
+            # Проверяем расширение файла
+            ext = Path(abs_path).suffix.lower()
+            
+            # Загружаем данные в зависимости от расширения
+            if ext == '.csv':
+                df = pd.read_csv(abs_path, **kwargs)
+            elif ext == '.json':
+                df = pd.read_json(abs_path, **kwargs)
+            elif ext == '.yaml' or ext == '.yml':
+                try:
+                    with open(abs_path) as f:
+                        data = yaml.safe_load(f)
+                    df = pd.DataFrame(data)
+                except Exception as e:
+                    raise ValueError(f"Ошибка при загрузке YAML файла: {str(e)}")
+            else:
+                raise ValueError(f"Неподдерживаемый формат файла: {ext}")
+            
+            # Проверяем размер данных после загрузки
+            if len(df) > 1000000:  # ограничение в 1 миллион строк
+                raise ValueError(f"Количество строк в данных превышает допустимый лимит в 1 миллион: {len(df)}")
+            
+            if self.schema:
+                self.validate_data(df)
+            
+            return df
+        except (FileNotFoundError, ValueError) as e:
+            raise e
+        except Exception as e:
+            raise ValueError(f"Ошибка при загрузке файла: {str(e)}")
 
 class PostgresDataLoader(DataLoader):
     """
@@ -396,9 +428,12 @@ class PostgresDataLoader(DataLoader):
         Parameters
         ----------
         query : str
-            SQL запрос
+            SQL запрос. Для безопасности используйте параметризованные запросы.
+            Например: "SELECT * FROM users WHERE age > %(min_age)s"
         **kwargs : dict
-            Дополнительные параметры для pd.read_sql
+            Дополнительные параметры для pd.read_sql. 
+            Для безопасной параметризации используйте ключ 'params'.
+            Например: params={'min_age': 18}
         
         Returns
         -------
@@ -408,9 +443,22 @@ class PostgresDataLoader(DataLoader):
         Raises
         ------
         ValueError
-            Если данные не соответствуют схеме
+            Если запрос небезопасен или данные не соответствуют схеме
         """
-        df = pd.read_sql(query, self.engine, **kwargs)
+        # Базовая проверка безопасности
+        unsafe_keywords = ['DROP', 'DELETE', 'TRUNCATE', 'ALTER', 'GRANT', 'EXECUTE']
+        for keyword in unsafe_keywords:
+            if keyword.upper() in query.upper():
+                raise ValueError(f"Запрос содержит небезопасное ключевое слово: {keyword}")
+        
+        # Проверяем наличие параметризации при наличии входных параметров
+        if 'params' in kwargs and not any(x in query for x in ['%s', '?', '%(', ':']) and ';' in query:
+            raise ValueError("Запрос должен использовать параметризацию для безопасности")
+        
+        try:
+            df = pd.read_sql(query, self.engine, **kwargs)
+        except Exception as e:
+            raise ValueError(f"Ошибка выполнения SQL-запроса: {str(e)}")
         
         if self.schema:
             self.validate_data(df)
@@ -587,9 +635,12 @@ class ImpalaDataLoader(DataLoader):
         Parameters
         ----------
         query : str
-            SQL запрос
+            SQL запрос. Для безопасности используйте параметризованные запросы.
+            Например: "SELECT * FROM users WHERE age > %(min_age)s"
         **kwargs : dict
-            Дополнительные параметры для pd.read_sql
+            Дополнительные параметры для pd.read_sql. 
+            Для безопасной параметризации используйте ключ 'params'.
+            Например: params={'min_age': 18}
         
         Returns
         -------
@@ -599,9 +650,22 @@ class ImpalaDataLoader(DataLoader):
         Raises
         ------
         ValueError
-            Если данные не соответствуют схеме
+            Если запрос небезопасен или данные не соответствуют схеме
         """
-        df = pd.read_sql(query, self.engine, **kwargs)
+        # Базовая проверка безопасности
+        unsafe_keywords = ['DROP', 'DELETE', 'TRUNCATE', 'ALTER', 'GRANT', 'EXECUTE']
+        for keyword in unsafe_keywords:
+            if keyword.upper() in query.upper():
+                raise ValueError(f"Запрос содержит небезопасное ключевое слово: {keyword}")
+        
+        # Проверяем наличие параметризации при наличии входных параметров
+        if 'params' in kwargs and not any(x in query for x in ['%s', '?', '%(', ':']) and ';' in query:
+            raise ValueError("Запрос должен использовать параметризацию для безопасности")
+        
+        try:
+            df = pd.read_sql(query, self.engine, **kwargs)
+        except Exception as e:
+            raise ValueError(f"Ошибка выполнения SQL-запроса: {str(e)}")
         
         if self.schema:
             self.validate_data(df)

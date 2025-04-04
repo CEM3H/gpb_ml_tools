@@ -20,12 +20,8 @@ from core.container import ModelContainer
 def test_data_loader_with_missing_file():
     """Тест обработки отсутствующего файла данных"""
     with pytest.raises(FileNotFoundError) as exc_info:
-        # Создаем правильный словарь параметров
-        loader = FileDataLoader({
-            'file_path': 'несуществующий_файл.csv',
-            'file_type': 'csv'
-        })
-        loader.load_data()
+        loader = FileDataLoader()
+        loader.load_data('несуществующий_файл.csv')
     
     # Проверяем, что сообщение об ошибке содержит информацию о файле
     assert "несуществующий_файл.csv" in str(exc_info.value)
