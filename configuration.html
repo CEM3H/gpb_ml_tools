@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Конфигурация и настройка &mdash; GPB Library 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=01f34227"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            GPB Library
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules/data.html">Модуль data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/validation.html">Модуль validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/feature_selection.html">Модуль feature_selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/preprocessing.html">Модуль preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/preprocessing.html#id7">Предобработка данных</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/models.html">Модуль models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/reporting.html">Модуль reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/metrics.html">Модуль metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/utils.html">Модуль utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/container.html">Модуль container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/pipeline.html">Модуль pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extending.html">Расширение библиотеки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Тестирование</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">GPB Library</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Конфигурация и настройка</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/configuration.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>Конфигурация и настройка<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<section id="id2">
+<h2>Общие настройки<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>Библиотека GPB может быть настроена с помощью конфигурационного файла <code class="docutils literal notranslate"><span class="pre">config.yaml</span></code>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Настройки логирования</span>
+<span class="nt">logging</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">INFO</span>
+<span class="w">  </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;%(asctime)s</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">%(name)s</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">%(levelname)s</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">%(message)s&quot;</span>
+<span class="w">  </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gpb.log&quot;</span>
+
+<span class="c1"># Настройки кэширования</span>
+<span class="nt">cache</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">directory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;.cache&quot;</span>
+<span class="w">  </span><span class="nt">ttl</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3600</span>
+
+<span class="c1"># Настройки параллельной обработки</span>
+<span class="nt">parallel</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">max_workers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
+
+<span class="c1"># Настройки валидации</span>
+<span class="nt">validation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">strict_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">max_errors</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+
+<span class="c1"># Настройки отбора признаков</span>
+<span class="nt">feature_selection</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">min_features</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">  </span><span class="nt">max_features</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">  </span><span class="nt">correlation_threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.8</span>
+
+<span class="c1"># Настройки предобработки</span>
+<span class="nt">preprocessing</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">handle_missing</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">handle_outliers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">outlier_threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2>Настройки загрузчиков данных<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<section id="filedataloader">
+<h3>FileDataLoader<a class="headerlink" href="#filedataloader" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">data_loading</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">file</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">default_encoding</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">utf-8</span>
+<span class="w">    </span><span class="nt">default_separator</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;,&quot;</span>
+<span class="w">    </span><span class="nt">default_decimal</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;.&quot;</span>
+<span class="w">    </span><span class="nt">default_thousands</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;,&quot;</span>
+<span class="w">    </span><span class="nt">chunk_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10000</span>
+<span class="w">    </span><span class="nt">max_rows</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+</pre></div>
+</div>
+</section>
+<section id="postgresdataloader">
+<h3>PostgresDataLoader<a class="headerlink" href="#postgresdataloader" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">data_loading</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">postgres</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">connection_timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span>
+<span class="w">    </span><span class="nt">statement_timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3600</span>
+<span class="w">    </span><span class="nt">pool_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">    </span><span class="nt">max_overflow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">    </span><span class="nt">pool_timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span>
+<span class="w">    </span><span class="nt">pool_recycle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3600</span>
+</pre></div>
+</div>
+</section>
+<section id="impaladataloader">
+<h3>ImpalaDataLoader<a class="headerlink" href="#impaladataloader" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">data_loading</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">impala</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">connection_timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span>
+<span class="w">    </span><span class="nt">socket_timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3600</span>
+<span class="w">    </span><span class="nt">use_ssl</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">ca_cert</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">    </span><span class="nt">auth_mechanism</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PLAIN</span>
+<span class="w">    </span><span class="nt">krb_service_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">impala</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id4">
+<h2>Настройки валидации<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<section id="schemavalidator">
+<h3>SchemaValidator<a class="headerlink" href="#schemavalidator" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">validation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">schema</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">strict_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">max_errors</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">    </span><span class="nt">skip_unknown_columns</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">handle_missing_values</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">handle_duplicates</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</pre></div>
+</div>
+</section>
+<section id="datetimeschemavalidator">
+<h3>DateTimeSchemaValidator<a class="headerlink" href="#datetimeschemavalidator" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">validation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">datetime</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">default_format</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;%Y-%m-%d</span><span class="nv"> </span><span class="s">%H:%M:%S&quot;</span>
+<span class="w">    </span><span class="nt">timezone</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;UTC&quot;</span>
+<span class="w">    </span><span class="nt">handle_invalid_dates</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">handle_missing_dates</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id5">
+<h2>Настройки отбора признаков<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<section id="statisticalfeatureselector">
+<h3>StatisticalFeatureSelector<a class="headerlink" href="#statisticalfeatureselector" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">feature_selection</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">statistical</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">variance_threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span>
+<span class="w">    </span><span class="nt">correlation_threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.8</span>
+<span class="w">    </span><span class="nt">mutual_info_threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
+<span class="w">    </span><span class="nt">handle_missing_values</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</pre></div>
+</div>
+</section>
+<section id="modelbasedfeatureselector">
+<h3>ModelBasedFeatureSelector<a class="headerlink" href="#modelbasedfeatureselector" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">feature_selection</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">model_based</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">n_features_to_select</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">    </span><span class="nt">step</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">    </span><span class="nt">importance_threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.01</span>
+<span class="w">    </span><span class="nt">handle_missing_values</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id6">
+<h2>Настройки предобработки<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<section id="numericpreprocessor">
+<h3>NumericPreprocessor<a class="headerlink" href="#numericpreprocessor" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">preprocessing</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">numeric</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">handle_missing_values</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">handle_outliers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">outlier_threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0</span>
+<span class="w">    </span><span class="nt">scale_features</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">robust_scaling</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</pre></div>
+</div>
+</section>
+<section id="categoricalpreprocessor">
+<h3>CategoricalPreprocessor<a class="headerlink" href="#categoricalpreprocessor" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">preprocessing</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">categorical</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">handle_missing_values</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">handle_unknown</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;error&quot;</span>
+<span class="w">    </span><span class="nt">min_frequency</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.01</span>
+<span class="w">    </span><span class="nt">max_categories</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id7">
+<h2>Использование конфигурации<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<section id="id8">
+<h3>Загрузка конфигурации<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">core.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_config</span>
+
+<span class="c1"># Загрузка конфигурации из файла</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="s1">&#39;config.yaml&#39;</span><span class="p">)</span>
+
+<span class="c1"># Использование конфигурации</span>
+<span class="n">loader</span> <span class="o">=</span> <span class="n">FileDataLoader</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;data_loading&#39;</span><span class="p">][</span><span class="s1">&#39;file&#39;</span><span class="p">])</span>
+<span class="n">validator</span> <span class="o">=</span> <span class="n">SchemaValidator</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;validation&#39;</span><span class="p">][</span><span class="s1">&#39;schema&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h3>Переопределение настроек<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">core.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_config</span>
+
+<span class="c1"># Загрузка базовой конфигурации</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="s1">&#39;config.yaml&#39;</span><span class="p">)</span>
+
+<span class="c1"># Переопределение настроек</span>
+<span class="n">config</span><span class="p">[</span><span class="s1">&#39;data_loading&#39;</span><span class="p">][</span><span class="s1">&#39;file&#39;</span><span class="p">][</span><span class="s1">&#39;default_encoding&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;cp1251&#39;</span>
+<span class="n">config</span><span class="p">[</span><span class="s1">&#39;validation&#39;</span><span class="p">][</span><span class="s1">&#39;schema&#39;</span><span class="p">][</span><span class="s1">&#39;strict_mode&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="c1"># Использование обновленной конфигурации</span>
+<span class="n">loader</span> <span class="o">=</span> <span class="n">FileDataLoader</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;data_loading&#39;</span><span class="p">][</span><span class="s1">&#39;file&#39;</span><span class="p">])</span>
+<span class="n">validator</span> <span class="o">=</span> <span class="n">SchemaValidator</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;validation&#39;</span><span class="p">][</span><span class="s1">&#39;schema&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id10">
+<h2>Программная настройка<a class="headerlink" href="#id10" title="Link to this heading"></a></h2>
+<p>Вы также можете настроить библиотеку программно:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">core.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
+
+<span class="c1"># Создание конфигурации</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="p">()</span>
+
+<span class="c1"># Настройка логирования</span>
+<span class="n">config</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="s1">&#39;DEBUG&#39;</span>
+<span class="n">config</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">format</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> - </span><span class="si">%(message)s</span><span class="s1">&#39;</span>
+
+<span class="c1"># Настройка кэширования</span>
+<span class="n">config</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">config</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">directory</span> <span class="o">=</span> <span class="s1">&#39;.cache&#39;</span>
+<span class="n">config</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">ttl</span> <span class="o">=</span> <span class="mi">3600</span>
+
+<span class="c1"># Настройка параллельной обработки</span>
+<span class="n">config</span><span class="o">.</span><span class="n">parallel</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">config</span><span class="o">.</span><span class="n">parallel</span><span class="o">.</span><span class="n">max_workers</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="c1"># Применение конфигурации</span>
+<span class="n">config</span><span class="o">.</span><span class="n">apply</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, GPB Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

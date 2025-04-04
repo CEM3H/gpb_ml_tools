@@ -1,9 +1,0 @@
-include LICENSE
-include README.md
-include requirements.txt
-recursive-include schemas *.json *.yaml
-recursive-include core *.py *.json *.yaml
-prune tests
-prune examples
-prune catboost_info
-prune .pytest_cache 

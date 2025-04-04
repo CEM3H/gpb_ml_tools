@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>core.data.data_loaders &mdash; GPB Library 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            GPB Library
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Установка и использование</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../architecture.html">Архитектура библиотеки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html">Конфигурация и настройка</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Примеры использования</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/data.html">Модуль data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/validation.html">Модуль validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/feature_selection.html">Модуль feature_selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/preprocessing.html">Модуль preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/preprocessing.html#id7">Предобработка данных</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/models.html">Модуль models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/reporting.html">Модуль reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/metrics.html">Модуль metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/utils.html">Модуль utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/container.html">Модуль container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/pipeline.html">Модуль pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../extending.html">Расширение библиотеки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../testing.html">Тестирование</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">GPB Library</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">core.data.data_loaders</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for core.data.data_loaders</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Модуль для загрузки данных из различных источников.</span>
+
+<span class="sd">Этот модуль предоставляет классы для загрузки данных из файлов,</span>
+<span class="sd">баз данных и других источников с поддержкой валидации схемы данных.</span>
+
+<span class="sd">Примеры использования:</span>
+<span class="sd">    ```python</span>
+<span class="sd">    # Создание схемы данных</span>
+<span class="sd">    schema = DataSchema([</span>
+<span class="sd">        ColumnSchema(</span>
+<span class="sd">            name=&#39;id&#39;,</span>
+<span class="sd">            data_type=DataType.INTEGER,</span>
+<span class="sd">            required=True,</span>
+<span class="sd">            constraints={&#39;unique&#39;: True}</span>
+<span class="sd">        ),</span>
+<span class="sd">        ColumnSchema(</span>
+<span class="sd">            name=&#39;age&#39;,</span>
+<span class="sd">            data_type=DataType.INTEGER,</span>
+<span class="sd">            required=True,</span>
+<span class="sd">            constraints={&#39;min&#39;: 0, &#39;max&#39;: 150}</span>
+<span class="sd">        ),</span>
+<span class="sd">        ColumnSchema(</span>
+<span class="sd">            name=&#39;email&#39;,</span>
+<span class="sd">            data_type=DataType.STRING,</span>
+<span class="sd">            required=True,</span>
+<span class="sd">            constraints={&#39;pattern&#39;: r&#39;^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$&#39;}</span>
+<span class="sd">        ),</span>
+<span class="sd">        ColumnSchema(</span>
+<span class="sd">            name=&#39;status&#39;,</span>
+<span class="sd">            data_type=DataType.CATEGORICAL,</span>
+<span class="sd">            required=True,</span>
+<span class="sd">            categories=[&#39;active&#39;, &#39;inactive&#39;, &#39;blocked&#39;]</span>
+<span class="sd">        )</span>
+<span class="sd">    ])</span>
+
+<span class="sd">    # Загрузка данных из CSV файла</span>
+<span class="sd">    file_loader = FileDataLoader(schema)</span>
+<span class="sd">    df = file_loader.load_data(&#39;data/users.csv&#39;)</span>
+
+<span class="sd">    # Загрузка данных из PostgreSQL</span>
+<span class="sd">    pg_loader = PostgresDataLoader(</span>
+<span class="sd">        connection_params={</span>
+<span class="sd">            &#39;host&#39;: &#39;localhost&#39;,</span>
+<span class="sd">            &#39;port&#39;: 5432,</span>
+<span class="sd">            &#39;database&#39;: &#39;my_db&#39;,</span>
+<span class="sd">            &#39;user&#39;: &#39;user&#39;,</span>
+<span class="sd">            &#39;password&#39;: &#39;password&#39;,</span>
+<span class="sd">            &#39;use_ssl&#39;: True</span>
+<span class="sd">        },</span>
+<span class="sd">        schema=schema</span>
+<span class="sd">    )</span>
+<span class="sd">    df = pg_loader.load_data(&quot;SELECT * FROM users&quot;)</span>
+
+<span class="sd">    # Загрузка данных из Impala</span>
+<span class="sd">    impala_loader = ImpalaDataLoader(</span>
+<span class="sd">        connection_params={</span>
+<span class="sd">            &#39;host&#39;: &#39;impala.example.com&#39;,</span>
+<span class="sd">            &#39;port&#39;: 21050,</span>
+<span class="sd">            &#39;database&#39;: &#39;default&#39;,</span>
+<span class="sd">            &#39;auth_mechanism&#39;: &#39;GSSAPI&#39;,</span>
+<span class="sd">            &#39;use_ssl&#39;: True</span>
+<span class="sd">        },</span>
+<span class="sd">        schema=schema</span>
+<span class="sd">    )</span>
+<span class="sd">    df = impala_loader.load_data(&quot;SELECT * FROM users&quot;)</span>
+<span class="sd">    ```</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sa</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.schema</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataSchema</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.validation</span><span class="w"> </span><span class="kn">import</span> <span class="n">SchemaValidator</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">DataLoader</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Базовый класс для загрузки данных.</span>
+<span class="sd">    </span>
+<span class="sd">    Предоставляет общий интерфейс для загрузки данных из различных источников</span>
+<span class="sd">    с поддержкой валидации схемы.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    schema : DataSchema, optional</span>
+<span class="sd">        Схема данных для валидации, по умолчанию None</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    ```python</span>
+<span class="sd">    # Создание базового загрузчика с валидацией</span>
+<span class="sd">    schema = DataSchema([</span>
+<span class="sd">        ColumnSchema(</span>
+<span class="sd">            name=&#39;id&#39;,</span>
+<span class="sd">            data_type=DataType.INTEGER,</span>
+<span class="sd">            required=True</span>
+<span class="sd">        )</span>
+<span class="sd">    ])</span>
+<span class="sd">    loader = DataLoader(schema)</span>
+
+<span class="sd">    # Проверка данных на соответствие схеме</span>
+<span class="sd">    df = pd.DataFrame({&#39;id&#39;: [1, 2, 3]})</span>
+<span class="sd">    try:</span>
+<span class="sd">        loader.validate_data(df)</span>
+<span class="sd">        print(&quot;Данные соответствуют схеме&quot;)</span>
+<span class="sd">    except ValueError as e:</span>
+<span class="sd">        print(f&quot;Ошибка валидации: {e}&quot;)</span>
+<span class="sd">    ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DataSchema</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">schema</span> <span class="o">=</span> <span class="n">schema</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validator</span> <span class="o">=</span> <span class="n">SchemaValidator</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span> <span class="k">if</span> <span class="n">schema</span> <span class="k">else</span> <span class="kc">None</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Загружает данные из источника.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        **kwargs : dict</span>
+<span class="sd">            Дополнительные параметры для загрузки данных</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            Загруженные данные</span>
+<span class="sd">        </span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        NotImplementedError</span>
+<span class="sd">            Если метод не реализован в дочернем классе</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Метод должен быть реализован в дочернем классе&quot;</span><span class="p">)</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Проверяет данные на соответствие схеме.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        df : pd.DataFrame</span>
+<span class="sd">            DataFrame для проверки</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            True, если данные соответствуют схеме</span>
+<span class="sd">        </span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            Если схема не задана или данные не соответствуют схеме</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">validator</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Схема данных не задана&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<div class="viewcode-block" id="FileDataLoader">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.data_loaders.FileDataLoader">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">FileDataLoader</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Класс для загрузки данных из файлов.</span>
+<span class="sd">    </span>
+<span class="sd">    Поддерживает загрузку данных из CSV, JSON, YAML и других форматов файлов.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    schema : DataSchema, optional</span>
+<span class="sd">        Схема данных для валидации, по умолчанию None</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    ```python</span>
+<span class="sd">    # Создание схемы данных</span>
+<span class="sd">    schema = DataSchema([</span>
+<span class="sd">        ColumnSchema(</span>
+<span class="sd">            name=&#39;id&#39;,</span>
+<span class="sd">            data_type=DataType.INTEGER,</span>
+<span class="sd">            required=True</span>
+<span class="sd">        ),</span>
+<span class="sd">        ColumnSchema(</span>
+<span class="sd">            name=&#39;name&#39;,</span>
+<span class="sd">            data_type=DataType.STRING,</span>
+<span class="sd">            required=True</span>
+<span class="sd">        )</span>
+<span class="sd">    ])</span>
+
+<span class="sd">    # Создание загрузчика файлов</span>
+<span class="sd">    loader = FileDataLoader(schema)</span>
+
+<span class="sd">    # Загрузка данных из CSV</span>
+<span class="sd">    df = loader.load_data(&#39;data/users.csv&#39;)</span>
+
+<span class="sd">    # Загрузка данных из JSON</span>
+<span class="sd">    df = loader.load_data(&#39;data/users.json&#39;)</span>
+
+<span class="sd">    # Загрузка данных из YAML</span>
+<span class="sd">    df = loader.load_data(&#39;data/users.yaml&#39;)</span>
+
+<span class="sd">    # Загрузка с дополнительными параметрами</span>
+<span class="sd">    df = loader.load_data(</span>
+<span class="sd">        &#39;data/users.csv&#39;,</span>
+<span class="sd">        sep=&#39;;&#39;,</span>
+<span class="sd">        encoding=&#39;utf-8&#39;,</span>
+<span class="sd">        na_values=[&#39;NA&#39;, &#39;missing&#39;]</span>
+<span class="sd">    )</span>
+<span class="sd">    ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="FileDataLoader.load_data">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.data_loaders.FileDataLoader.load_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Загружает данные из файла.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        file_path : str</span>
+<span class="sd">            Путь к файлу</span>
+<span class="sd">        **kwargs : dict</span>
+<span class="sd">            Дополнительные параметры для pd.read_csv/read_json/etc.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            Загруженные данные</span>
+<span class="sd">        </span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        FileNotFoundError</span>
+<span class="sd">            Если файл не найден</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            Если формат файла не поддерживается</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Файл не найден: </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="n">ext</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span><span class="o">.</span><span class="n">suffix</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">ext</span> <span class="o">==</span> <span class="s1">&#39;.csv&#39;</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">ext</span> <span class="o">==</span> <span class="s1">&#39;.json&#39;</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">ext</span> <span class="o">==</span> <span class="s1">&#39;.yaml&#39;</span> <span class="ow">or</span> <span class="n">ext</span> <span class="o">==</span> <span class="s1">&#39;.yml&#39;</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Неподдерживаемый формат файла: </span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">validate_data</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">df</span></div>
+</div>
+
+
+<div class="viewcode-block" id="PostgresDataLoader">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.data_loaders.PostgresDataLoader">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PostgresDataLoader</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Класс для загрузки данных из PostgreSQL.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    connection_params : dict</span>
+<span class="sd">        Параметры подключения к базе данных:</span>
+<span class="sd">        - host : str</span>
+<span class="sd">            Хост базы данных</span>
+<span class="sd">        - port : int</span>
+<span class="sd">            Порт базы данных</span>
+<span class="sd">        - database : str</span>
+<span class="sd">            Имя базы данных</span>
+<span class="sd">        - user : str</span>
+<span class="sd">            Имя пользователя</span>
+<span class="sd">        - password : str</span>
+<span class="sd">            Пароль</span>
+<span class="sd">        - use_ssl : bool, optional</span>
+<span class="sd">            Использовать SSL подключение</span>
+<span class="sd">    schema : DataSchema, optional</span>
+<span class="sd">        Схема данных для валидации, по умолчанию None</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    ```python</span>
+<span class="sd">    # Создание схемы данных</span>
+<span class="sd">    schema = DataSchema([</span>
+<span class="sd">        ColumnSchema(</span>
+<span class="sd">            name=&#39;id&#39;,</span>
+<span class="sd">            data_type=DataType.INTEGER,</span>
+<span class="sd">            required=True</span>
+<span class="sd">        ),</span>
+<span class="sd">        ColumnSchema(</span>
+<span class="sd">            name=&#39;name&#39;,</span>
+<span class="sd">            data_type=DataType.STRING,</span>
+<span class="sd">            required=True</span>
+<span class="sd">        )</span>
+<span class="sd">    ])</span>
+
+<span class="sd">    # Создание загрузчика PostgreSQL</span>
+<span class="sd">    loader = PostgresDataLoader(</span>
+<span class="sd">        connection_params={</span>
+<span class="sd">            &#39;host&#39;: &#39;localhost&#39;,</span>
+<span class="sd">            &#39;port&#39;: 5432,</span>
+<span class="sd">            &#39;database&#39;: &#39;my_db&#39;,</span>
+<span class="sd">            &#39;user&#39;: &#39;user&#39;,</span>
+<span class="sd">            &#39;password&#39;: &#39;password&#39;,</span>
+<span class="sd">            &#39;use_ssl&#39;: True</span>
+<span class="sd">        },</span>
+<span class="sd">        schema=schema</span>
+<span class="sd">    )</span>
+
+<span class="sd">    # Загрузка данных из таблицы</span>
+<span class="sd">    df = loader.load_data(&quot;SELECT * FROM users&quot;)</span>
+
+<span class="sd">    # Загрузка с дополнительными параметрами</span>
+<span class="sd">    df = loader.load_data(</span>
+<span class="sd">        &quot;SELECT * FROM users WHERE age &gt; %(min_age)s&quot;,</span>
+<span class="sd">        params={&#39;min_age&#39;: 18},</span>
+<span class="sd">        index_col=&#39;id&#39;</span>
+<span class="sd">    )</span>
+
+<span class="sd">    # Загрузка с использованием JOIN</span>
+<span class="sd">    query = (</span>
+<span class="sd">        &quot;SELECT u.id, u.name, o.order_date, o.amount &quot;</span>
+<span class="sd">        &quot;FROM users u &quot;</span>
+<span class="sd">        &quot;JOIN orders o ON u.id = o.user_id &quot;</span>
+<span class="sd">        &quot;WHERE o.order_date &gt;= %(start_date)s&quot;</span>
+<span class="sd">    )</span>
+<span class="sd">    df = loader.load_data(</span>
+<span class="sd">        query,</span>
+<span class="sd">        params={&#39;start_date&#39;: &#39;2024-01-01&#39;}</span>
+<span class="sd">    )</span>
+<span class="sd">    ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="PostgresDataLoader.__init__">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.data_loaders.PostgresDataLoader.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection_params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">schema</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DataSchema</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_connection_params</span><span class="p">(</span><span class="n">connection_params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection_params</span> <span class="o">=</span> <span class="n">connection_params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_engine</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="PostgresDataLoader._validate_connection_params">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.data_loaders.PostgresDataLoader._validate_connection_params">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_validate_connection_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Проверяет параметры подключения.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        params : dict</span>
+<span class="sd">            Параметры подключения</span>
+<span class="sd">        </span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            Если отсутствуют обязательные параметры</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">required</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">,</span> <span class="s1">&#39;port&#39;</span><span class="p">,</span> <span class="s1">&#39;database&#39;</span><span class="p">,</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">]</span>
+        <span class="n">missing</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">required</span> <span class="k">if</span> <span class="n">p</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">params</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">missing</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Отсутствуют обязательные параметры: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">missing</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="PostgresDataLoader._create_engine">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.data_loaders.PostgresDataLoader._create_engine">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_engine</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">sa</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">Engine</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Создает движок SQLAlchemy.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        sqlalchemy.engine.Engine</span>
+<span class="sd">            Движок для подключения к базе данных</span>
+<span class="sd">        </span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ImportError</span>
+<span class="sd">            Если не установлен sqlalchemy</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sa</span>
+        <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;Для работы с PostgreSQL требуется установить sqlalchemy&quot;</span><span class="p">)</span>
+        
+        <span class="n">connect_args</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;use_ssl&#39;</span><span class="p">):</span>
+            <span class="n">connect_args</span><span class="p">[</span><span class="s1">&#39;sslmode&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;require&#39;</span>
+        
+        <span class="n">url</span> <span class="o">=</span> <span class="n">sa</span><span class="o">.</span><span class="n">URL</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">drivername</span><span class="o">=</span><span class="s1">&#39;postgresql&#39;</span><span class="p">,</span>
+            <span class="n">host</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection_params</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">],</span>
+            <span class="n">port</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection_params</span><span class="p">[</span><span class="s1">&#39;port&#39;</span><span class="p">],</span>
+            <span class="n">database</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection_params</span><span class="p">[</span><span class="s1">&#39;database&#39;</span><span class="p">],</span>
+            <span class="n">username</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection_params</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">],</span>
+            <span class="n">password</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection_params</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]</span>
+        <span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">sa</span><span class="o">.</span><span class="n">create_engine</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">connect_args</span><span class="o">=</span><span class="n">connect_args</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="PostgresDataLoader.load_data">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.data_loaders.PostgresDataLoader.load_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Загружает данные из PostgreSQL.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        query : str</span>
+<span class="sd">            SQL запрос</span>
+<span class="sd">        **kwargs : dict</span>
+<span class="sd">            Дополнительные параметры для pd.read_sql</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            Загруженные данные</span>
+<span class="sd">        </span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            Если данные не соответствуют схеме</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">validate_data</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+            
+            <span class="c1"># Преобразуем типы данных согласно схеме</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">col</span><span class="o">.</span><span class="n">data_type</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">df</span></div>
+</div>
+
+
+<div class="viewcode-block" id="ImpalaDataLoader">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.data_loaders.ImpalaDataLoader">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ImpalaDataLoader</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Класс для загрузки данных из Impala.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    connection_params : dict</span>
+<span class="sd">        Параметры подключения к базе данных:</span>
+<span class="sd">        - host : str</span>
+<span class="sd">            Хост базы данных</span>
+<span class="sd">        - port : int</span>
+<span class="sd">            Порт базы данных</span>
+<span class="sd">        - database : str</span>
+<span class="sd">            Имя базы данных</span>
+<span class="sd">        - auth_mechanism : str, optional</span>
+<span class="sd">            Механизм аутентификации (&#39;GSSAPI&#39; или &#39;PLAIN&#39;)</span>
+<span class="sd">        - user : str, optional</span>
+<span class="sd">            Имя пользователя (для PLAIN)</span>
+<span class="sd">        - password : str, optional</span>
+<span class="sd">            Пароль (для PLAIN)</span>
+<span class="sd">        - use_ssl : bool, optional</span>
+<span class="sd">            Использовать SSL подключение</span>
+<span class="sd">    schema : DataSchema, optional</span>
+<span class="sd">        Схема данных для валидации, по умолчанию None</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    ```python</span>
+<span class="sd">    # Создание схемы данных</span>
+<span class="sd">    schema = DataSchema([</span>
+<span class="sd">        ColumnSchema(</span>
+<span class="sd">            name=&#39;id&#39;,</span>
+<span class="sd">            data_type=DataType.INTEGER,</span>
+<span class="sd">            required=True</span>
+<span class="sd">        ),</span>
+<span class="sd">        ColumnSchema(</span>
+<span class="sd">            name=&#39;name&#39;,</span>
+<span class="sd">            data_type=DataType.STRING,</span>
+<span class="sd">            required=True</span>
+<span class="sd">        )</span>
+<span class="sd">    ])</span>
+
+<span class="sd">    # Создание загрузчика Impala с GSSAPI аутентификацией</span>
+<span class="sd">    loader = ImpalaDataLoader(</span>
+<span class="sd">        connection_params={</span>
+<span class="sd">            &#39;host&#39;: &#39;impala.example.com&#39;,</span>
+<span class="sd">            &#39;port&#39;: 21050,</span>
+<span class="sd">            &#39;database&#39;: &#39;default&#39;,</span>
+<span class="sd">            &#39;auth_mechanism&#39;: &#39;GSSAPI&#39;,</span>
+<span class="sd">            &#39;use_ssl&#39;: True</span>
+<span class="sd">        },</span>
+<span class="sd">        schema=schema</span>
+<span class="sd">    )</span>
+
+<span class="sd">    # Создание загрузчика Impala с PLAIN аутентификацией</span>
+<span class="sd">    loader = ImpalaDataLoader(</span>
+<span class="sd">        connection_params={</span>
+<span class="sd">            &#39;host&#39;: &#39;impala.example.com&#39;,</span>
+<span class="sd">            &#39;port&#39;: 21050,</span>
+<span class="sd">            &#39;database&#39;: &#39;default&#39;,</span>
+<span class="sd">            &#39;auth_mechanism&#39;: &#39;PLAIN&#39;,</span>
+<span class="sd">            &#39;user&#39;: &#39;user&#39;,</span>
+<span class="sd">            &#39;password&#39;: &#39;password&#39;,</span>
+<span class="sd">            &#39;use_ssl&#39;: True</span>
+<span class="sd">        },</span>
+<span class="sd">        schema=schema</span>
+<span class="sd">    )</span>
+
+<span class="sd">    # Загрузка данных из таблицы</span>
+<span class="sd">    df = loader.load_data(&quot;SELECT * FROM users&quot;)</span>
+
+<span class="sd">    # Загрузка с дополнительными параметрами</span>
+<span class="sd">    df = loader.load_data(</span>
+<span class="sd">        &quot;SELECT * FROM users WHERE age &gt; %(min_age)s&quot;,</span>
+<span class="sd">        params={&#39;min_age&#39;: 18},</span>
+<span class="sd">        index_col=&#39;id&#39;</span>
+<span class="sd">    )</span>
+
+<span class="sd">    # Загрузка с использованием JOIN</span>
+<span class="sd">    query = (</span>
+<span class="sd">        &quot;SELECT u.id, u.name, o.order_date, o.amount &quot;</span>
+<span class="sd">        &quot;FROM users u &quot;</span>
+<span class="sd">        &quot;JOIN orders o ON u.id = o.user_id &quot;</span>
+<span class="sd">        &quot;WHERE o.order_date &gt;= %(start_date)s&quot;</span>
+<span class="sd">    )</span>
+<span class="sd">    df = loader.load_data(</span>
+<span class="sd">        query,</span>
+<span class="sd">        params={&#39;start_date&#39;: &#39;2024-01-01&#39;}</span>
+<span class="sd">    )</span>
+<span class="sd">    ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="ImpalaDataLoader.__init__">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.data_loaders.ImpalaDataLoader.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection_params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">schema</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DataSchema</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_connection_params</span><span class="p">(</span><span class="n">connection_params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection_params</span> <span class="o">=</span> <span class="n">connection_params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_engine</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="ImpalaDataLoader._validate_connection_params">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.data_loaders.ImpalaDataLoader._validate_connection_params">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_validate_connection_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Проверяет параметры подключения.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        params : dict</span>
+<span class="sd">            Параметры подключения</span>
+<span class="sd">        </span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            Если отсутствуют обязательные параметры</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">required</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">,</span> <span class="s1">&#39;port&#39;</span><span class="p">,</span> <span class="s1">&#39;database&#39;</span><span class="p">]</span>
+        <span class="n">missing</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">required</span> <span class="k">if</span> <span class="n">p</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">params</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">missing</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Отсутствуют обязательные параметры: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">missing</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="ImpalaDataLoader._create_engine">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.data_loaders.ImpalaDataLoader._create_engine">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_engine</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">sa</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">Engine</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Создает движок SQLAlchemy.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        sqlalchemy.engine.Engine</span>
+<span class="sd">            Движок для подключения к базе данных</span>
+<span class="sd">        </span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ImportError</span>
+<span class="sd">            Если не установлен sqlalchemy</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sa</span>
+        <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;Для работы с Impala требуется установить sqlalchemy&quot;</span><span class="p">)</span>
+        
+        <span class="n">connect_args</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">auth_mechanism</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;auth_mechanism&#39;</span><span class="p">,</span> <span class="s1">&#39;GSSAPI&#39;</span><span class="p">)</span>
+        <span class="n">connect_args</span><span class="p">[</span><span class="s1">&#39;auth_mechanism&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">auth_mechanism</span>
+        
+        <span class="k">if</span> <span class="n">auth_mechanism</span> <span class="o">==</span> <span class="s1">&#39;PLAIN&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;user&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection_params</span> <span class="ow">or</span> <span class="s1">&#39;password&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection_params</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Для PLAIN аутентификации требуются user и password&quot;</span><span class="p">)</span>
+            <span class="n">connect_args</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection_params</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span>
+            <span class="n">connect_args</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection_params</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;use_ssl&#39;</span><span class="p">):</span>
+            <span class="n">connect_args</span><span class="p">[</span><span class="s1">&#39;use_ssl&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span>
+        
+        <span class="n">url</span> <span class="o">=</span> <span class="n">sa</span><span class="o">.</span><span class="n">URL</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">drivername</span><span class="o">=</span><span class="s1">&#39;impala&#39;</span><span class="p">,</span>
+            <span class="n">host</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection_params</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">],</span>
+            <span class="n">port</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection_params</span><span class="p">[</span><span class="s1">&#39;port&#39;</span><span class="p">],</span>
+            <span class="n">database</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection_params</span><span class="p">[</span><span class="s1">&#39;database&#39;</span><span class="p">]</span>
+        <span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">sa</span><span class="o">.</span><span class="n">create_engine</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">connect_args</span><span class="o">=</span><span class="n">connect_args</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="ImpalaDataLoader.load_data">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.data_loaders.ImpalaDataLoader.load_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Загружает данные из Impala.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        query : str</span>
+<span class="sd">            SQL запрос</span>
+<span class="sd">        **kwargs : dict</span>
+<span class="sd">            Дополнительные параметры для pd.read_sql</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            Загруженные данные</span>
+<span class="sd">        </span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            Если данные не соответствуют схеме</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">validate_data</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+            
+            <span class="c1"># Преобразуем типы данных согласно схеме</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">col</span><span class="o">.</span><span class="n">data_type</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">df</span> </div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, GPB Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

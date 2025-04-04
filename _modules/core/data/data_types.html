@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>core.data.data_types &mdash; GPB Library 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            GPB Library
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Начало работы:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Установка и использование</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../architecture.html">Архитектура библиотеки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html">Конфигурация и настройка</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Основные модули:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/data.html">Модуль data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/validation.html">Модуль validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/feature_selection.html">Модуль feature_selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/preprocessing.html">Модуль preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/models.html">Модуль models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/metrics.html">Модуль metrics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Отчетность и инфраструктура:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/reporting.html">Модуль reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/utils.html">Модуль utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/container.html">Модуль container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/pipeline.html">Модуль pipeline</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Разработка:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../extending.html">Расширение библиотеки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../testing.html">Тестирование</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Примеры использования</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">GPB Library</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">core.data.data_types</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for core.data.data_types</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<div class="viewcode-block" id="downcast_types">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.data_types.downcast_types">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">downcast_types</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">optimize_types</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Приведение типов данных DataFrame к оптимальным для экономии памяти.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        df: Исходный DataFrame</span>
+<span class="sd">        optimize_types: Флаг, указывающий нужно ли оптимизировать типы данных</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        DataFrame с оптимизированными типами данных</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">optimize_types</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">df</span>
+    
+    <span class="n">result</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    
+    <span class="c1"># Оптимизация целочисленных колонок</span>
+    <span class="n">int_cols</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;int&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">columns</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">int_cols</span><span class="p">:</span>
+        <span class="c1"># Проверяем наличие отрицательных значений</span>
+        <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Если нет отрицательных значений, используем беззнаковые целые</span>
+            <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="mi">255</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="mi">65535</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="mi">4294967295</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint64</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Если есть отрицательные значения, используем знаковые целые</span>
+            <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="mi">128</span> <span class="ow">and</span> <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="mi">127</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="mi">32768</span> <span class="ow">and</span> <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="mi">32767</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="mi">2147483648</span> <span class="ow">and</span> <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="mi">2147483647</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    
+    <span class="c1"># Оптимизация числовых колонок с плавающей точкой</span>
+    <span class="n">float_cols</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;float&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">columns</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">float_cols</span><span class="p">:</span>
+        <span class="c1"># Проверяем, можно ли преобразовать в float32 без потери точности</span>
+        <span class="c1"># Для простоты используем float32 для всех float-колонок </span>
+        <span class="c1"># (в реальных проектах может потребоваться более тонкая логика)</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    
+    <span class="c1"># Оптимизация категориальных колонок</span>
+    <span class="n">cat_cols</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;object&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">columns</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cat_cols</span><span class="p">:</span>
+        <span class="c1"># Если уникальных значений меньше половины от общего числа значений</span>
+        <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="apply_dtypes_from_schema">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.data_types.apply_dtypes_from_schema">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">apply_dtypes_from_schema</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">schema</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> 
+                             <span class="n">optimize_types</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Применяет типы данных из схемы к DataFrame с возможностью оптимизации.</span>
+<span class="sd">    </span>
+<span class="sd">    Функция преобразует типы данных каждой колонки DataFrame в соответствии со схемой.</span>
+<span class="sd">    Если включена оптимизация типов, то для числовых колонок будут использованы</span>
+<span class="sd">    наиболее экономичные типы данных на основе анализа значений.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        df: Исходный DataFrame</span>
+<span class="sd">        schema: Словарь схемы данных, где ключи - имена колонок,</span>
+<span class="sd">                значения - словари с информацией о типах данных</span>
+<span class="sd">        optimize_types: Флаг оптимизации типов данных (по умолчанию True).</span>
+<span class="sd">                        Если True, будут использованы наиболее экономичные типы.</span>
+<span class="sd">                        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        DataFrame с оптимизированными типами данных</span>
+<span class="sd">        </span>
+<span class="sd">    Примеры:</span>
+<span class="sd">        ```python</span>
+<span class="sd">        # Создание простого DataFrame</span>
+<span class="sd">        df = pd.DataFrame({</span>
+<span class="sd">            &#39;id&#39;: [1, 2, 3, 4, 5],</span>
+<span class="sd">            &#39;name&#39;: [&#39;Anna&#39;, &#39;Bob&#39;, &#39;Charlie&#39;, &#39;David&#39;, &#39;Elena&#39;],</span>
+<span class="sd">            &#39;age&#39;: [25, 32, 41, 29, 35],</span>
+<span class="sd">            &#39;registered&#39;: [True, True, False, True, False]</span>
+<span class="sd">        })</span>
+<span class="sd">        </span>
+<span class="sd">        # Создание схемы</span>
+<span class="sd">        schema = {</span>
+<span class="sd">            &#39;id&#39;: {&#39;dtype&#39;: &#39;int&#39;},</span>
+<span class="sd">            &#39;name&#39;: {&#39;dtype&#39;: &#39;category&#39;},</span>
+<span class="sd">            &#39;age&#39;: {&#39;dtype&#39;: &#39;int&#39;},</span>
+<span class="sd">            &#39;registered&#39;: {&#39;dtype&#39;: &#39;bool&#39;}</span>
+<span class="sd">        }</span>
+<span class="sd">        </span>
+<span class="sd">        # Применение схемы с оптимизацией</span>
+<span class="sd">        df_optimized = apply_dtypes_from_schema(df, schema)</span>
+<span class="sd">        </span>
+<span class="sd">        # Вывод информации о типах данных и использовании памяти</span>
+<span class="sd">        print(df_optimized.dtypes)</span>
+<span class="sd">        print(f&quot;Память до оптимизации: {df.memory_usage(deep=True).sum() / 1024:.2f} KB&quot;)</span>
+<span class="sd">        print(f&quot;Память после оптимизации: {df_optimized.memory_usage(deep=True).sum() / 1024:.2f} KB&quot;)</span>
+<span class="sd">        </span>
+<span class="sd">        # Применение схемы без оптимизации (стандартные типы pandas)</span>
+<span class="sd">        df_standard = apply_dtypes_from_schema(df, schema, optimize_types=False)</span>
+<span class="sd">        print(df_standard.dtypes)</span>
+<span class="sd">        ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    
+    <span class="c1"># Применяем типы данных к каждой колонке</span>
+    <span class="k">for</span> <span class="n">column</span><span class="p">,</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">schema</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">column</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="k">continue</span>
+        
+        <span class="n">dtype</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dtype&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">dtype</span><span class="p">:</span>
+            <span class="k">continue</span>
+        
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Обработка категориальных данных</span>
+            <span class="k">if</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;category&#39;</span><span class="p">:</span>
+                <span class="n">result_df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">result_df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span>
+            
+            <span class="c1"># Обработка логических данных</span>
+            <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;bool&#39;</span><span class="p">:</span>
+                <span class="n">result_df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">result_df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;bool&#39;</span><span class="p">)</span>
+            
+            <span class="c1"># Обработка данных даты и времени</span>
+            <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;datetime&#39;</span><span class="p">:</span>
+                <span class="n">result_df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">result_df</span><span class="p">[</span><span class="n">column</span><span class="p">])</span>
+            
+            <span class="c1"># Обработка числовых данных с оптимизацией</span>
+            <span class="k">elif</span> <span class="n">dtype</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;int&#39;</span><span class="p">,</span> <span class="s1">&#39;float&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">optimize_types</span><span class="p">:</span>
+                <span class="n">optimal_dtype</span> <span class="o">=</span> <span class="n">get_optimal_numeric_dtype</span><span class="p">(</span><span class="n">result_df</span><span class="p">[</span><span class="n">column</span><span class="p">])</span>
+                <span class="n">result_df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">result_df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">optimal_dtype</span><span class="p">)</span>
+            
+            <span class="c1"># Обработка числовых данных без оптимизации</span>
+            <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;int&#39;</span><span class="p">:</span>
+                <span class="n">result_df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">result_df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;float&#39;</span><span class="p">:</span>
+                <span class="n">result_df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">result_df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float64&#39;</span><span class="p">)</span>
+            
+            <span class="c1"># Обработка строковых данных</span>
+            <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;str&#39;</span><span class="p">:</span>
+                <span class="n">result_df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">result_df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">)</span>
+                
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка при преобразовании колонки </span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">result_df</span></div>
+
+
+<div class="viewcode-block" id="infer_dtypes">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.data_types.infer_dtypes">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">infer_dtypes</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">sample_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Автоматически определяет типы данных и метаданные для колонок DataFrame.</span>
+<span class="sd">    </span>
+<span class="sd">    Функция анализирует каждую колонку DataFrame и создает словарь метаданных, содержащий:</span>
+<span class="sd">    - dtype: рекомендуемый тип данных для хранения</span>
+<span class="sd">    - description: автоматически сгенерированное описание</span>
+<span class="sd">    - min/max: минимальное и максимальное значения для числовых колонок</span>
+<span class="sd">    - unique_count: количество уникальных значений для категориальных колонок</span>
+<span class="sd">    - example: пример значения из колонки</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        df: DataFrame для анализа</span>
+<span class="sd">        sample_size: размер выборки для анализа.</span>
+<span class="sd">                     Если размер DataFrame больше sample_size, будет использована выборка</span>
+<span class="sd">                     для ускорения анализа.</span>
+<span class="sd">                     </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Словарь схемы данных, где ключи - имена колонок, а значения - словари с метаданными</span>
+<span class="sd">        </span>
+<span class="sd">    Примеры:</span>
+<span class="sd">        ```python</span>
+<span class="sd">        # Анализ небольшого DataFrame</span>
+<span class="sd">        df = pd.DataFrame({</span>
+<span class="sd">            &#39;id&#39;: [1, 2, 3, 4, 5],</span>
+<span class="sd">            &#39;name&#39;: [&#39;Anna&#39;, &#39;Bob&#39;, &#39;Charlie&#39;, &#39;David&#39;, &#39;Elena&#39;],</span>
+<span class="sd">            &#39;age&#39;: [25, 32, 41, 29, 35],</span>
+<span class="sd">            &#39;registered&#39;: [True, True, False, True, False]</span>
+<span class="sd">        })</span>
+<span class="sd">        </span>
+<span class="sd">        schema = infer_dtypes(df)</span>
+<span class="sd">        print(json.dumps(schema, indent=2))</span>
+<span class="sd">        </span>
+<span class="sd">        # Анализ большого DataFrame с выборкой</span>
+<span class="sd">        df_large = pd.read_csv(&#39;large_data.csv&#39;)</span>
+<span class="sd">        schema = infer_dtypes(df_large, sample_size=10000)</span>
+<span class="sd">        </span>
+<span class="sd">        # Сохранение результата в файл</span>
+<span class="sd">        with open(&#39;data_schema.json&#39;, &#39;w&#39;) as f:</span>
+<span class="sd">            json.dump(schema, f, indent=2)</span>
+<span class="sd">        ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">sample_size</span><span class="p">:</span>
+        <span class="n">sample_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">sample_size</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sample_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        
+    <span class="n">schema</span> <span class="o">=</span> <span class="p">{}</span>
+    
+    <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">col_data</span> <span class="o">=</span> <span class="n">sample_df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span>
+            <span class="n">col_dtype</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+            
+            <span class="c1"># Основная информация</span>
+            <span class="n">column_info</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;dtype&#39;</span><span class="p">:</span> <span class="n">col_dtype</span><span class="p">,</span>
+                <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;Column </span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;example&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">col_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">col_data</span><span class="o">.</span><span class="n">empty</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">}</span>
+            
+            <span class="c1"># Числовые данные</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">):</span>
+                <span class="n">column_info</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">col_data</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">col_data</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="k">else</span> <span class="kc">None</span>
+                <span class="n">column_info</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">col_data</span><span class="o">.</span><span class="n">max</span><span class="p">())</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">col_data</span><span class="o">.</span><span class="n">max</span><span class="p">())</span> <span class="k">else</span> <span class="kc">None</span>
+                
+                <span class="c1"># Подбираем оптимальный тип для хранения</span>
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">):</span>
+                    <span class="n">column_info</span><span class="p">[</span><span class="s1">&#39;dtype&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;int&#39;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">column_info</span><span class="p">[</span><span class="s1">&#39;dtype&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span>
+            
+            <span class="c1"># Категориальные данные</span>
+            <span class="k">elif</span> <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;object&#39;</span> <span class="ow">or</span> <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;category&#39;</span><span class="p">:</span>
+                <span class="n">unique_count</span> <span class="o">=</span> <span class="n">col_data</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
+                <span class="n">ratio</span> <span class="o">=</span> <span class="n">unique_count</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">col_data</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">col_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+                
+                <span class="n">column_info</span><span class="p">[</span><span class="s1">&#39;unique_count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">unique_count</span><span class="p">)</span>
+                
+                <span class="c1"># Если мало уникальных значений, предлагаем категориальный тип</span>
+                <span class="k">if</span> <span class="n">ratio</span> <span class="o">&lt;</span> <span class="mf">0.5</span> <span class="ow">and</span> <span class="n">unique_count</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">:</span>
+                    <span class="n">column_info</span><span class="p">[</span><span class="s1">&#39;dtype&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;category&#39;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">column_info</span><span class="p">[</span><span class="s1">&#39;dtype&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;str&#39;</span>
+            
+            <span class="c1"># Логические данные</span>
+            <span class="k">elif</span> <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;bool&#39;</span><span class="p">:</span>
+                <span class="n">column_info</span><span class="p">[</span><span class="s1">&#39;dtype&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;bool&#39;</span>
+            
+            <span class="c1"># Даты и время</span>
+            <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">datetime64</span><span class="p">):</span>
+                <span class="n">column_info</span><span class="p">[</span><span class="s1">&#39;dtype&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;datetime&#39;</span>
+                
+            <span class="n">schema</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">column_info</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="c1"># Если произошла ошибка при обработке колонки, заполняем базовой информацией</span>
+            <span class="n">schema</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;dtype&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
+                <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;Column </span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s1"> (error during inference: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s1">)&#39;</span>
+            <span class="p">}</span>
+    
+    <span class="k">return</span> <span class="n">schema</span></div>
+
+
+<div class="viewcode-block" id="get_optimal_numeric_dtype">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.data_types.get_optimal_numeric_dtype">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_optimal_numeric_dtype</span><span class="p">(</span><span class="n">series</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Определяет оптимальный числовой тип данных для серии значений.</span>
+<span class="sd">    </span>
+<span class="sd">    Функция анализирует значения в серии и определяет наиболее экономичный</span>
+<span class="sd">    тип данных, который может хранить все возможные значения:</span>
+<span class="sd">    - Для целых чисел: int8, int16, int32, int64</span>
+<span class="sd">    - Для чисел с плавающей точкой: float32, float64</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        series: Серия pandas с числовыми значениями</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Строка с оптимальным типом данных pandas</span>
+<span class="sd">        </span>
+<span class="sd">    Примеры:</span>
+<span class="sd">        ```python</span>
+<span class="sd">        # Определение оптимального типа для целых чисел в небольшом диапазоне</span>
+<span class="sd">        s1 = pd.Series([1, 2, 3, 4, 5, -5, -10])</span>
+<span class="sd">        optimal_type = get_optimal_numeric_dtype(s1)  # Вернет &#39;int8&#39;</span>
+<span class="sd">        </span>
+<span class="sd">        # Определение оптимального типа для больших целых чисел</span>
+<span class="sd">        s2 = pd.Series([100000, 200000, 300000])</span>
+<span class="sd">        optimal_type = get_optimal_numeric_dtype(s2)  # Вернет &#39;int32&#39;</span>
+<span class="sd">        </span>
+<span class="sd">        # Определение оптимального типа для чисел с плавающей точкой</span>
+<span class="sd">        s3 = pd.Series([1.5, 2.7, 3.14159])</span>
+<span class="sd">        optimal_type = get_optimal_numeric_dtype(s3)  # Вернет &#39;float32&#39;</span>
+<span class="sd">        </span>
+<span class="sd">        # Применение оптимального типа к колонке DataFrame</span>
+<span class="sd">        df = pd.DataFrame({&#39;value&#39;: [1, 2, 3, 4, 5]})</span>
+<span class="sd">        optimal_type = get_optimal_numeric_dtype(df[&#39;value&#39;])</span>
+<span class="sd">        df[&#39;value&#39;] = df[&#39;value&#39;].astype(optimal_type)</span>
+<span class="sd">        print(f&quot;Новый тип колонки: {df[&#39;value&#39;].dtype}&quot;)</span>
+<span class="sd">        ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Проверяем, что серия не пустая</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">series</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;object&#39;</span>
+    
+    <span class="c1"># Если есть NaN значения, убираем их для анализа</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;float32&#39;</span>  <span class="c1"># Если все значения NaN, используем float</span>
+    
+    <span class="c1"># Проверяем, что это числовые данные</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;object&#39;</span>
+    
+    <span class="c1"># Проверяем, целые ли числа</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">)</span> <span class="ow">or</span> <span class="n">s</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)):</span>
+        <span class="n">min_val</span><span class="p">,</span> <span class="n">max_val</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">s</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        
+        <span class="c1"># Определяем оптимальный тип для целых чисел</span>
+        <span class="k">if</span> <span class="n">min_val</span> <span class="o">&gt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span><span class="o">.</span><span class="n">min</span> <span class="ow">and</span> <span class="n">max_val</span> <span class="o">&lt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;int8&#39;</span>
+        <span class="k">elif</span> <span class="n">min_val</span> <span class="o">&gt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span><span class="o">.</span><span class="n">min</span> <span class="ow">and</span> <span class="n">max_val</span> <span class="o">&lt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;int16&#39;</span>
+        <span class="k">elif</span> <span class="n">min_val</span> <span class="o">&gt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span><span class="o">.</span><span class="n">min</span> <span class="ow">and</span> <span class="n">max_val</span> <span class="o">&lt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;int32&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;int64&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Проверяем, можно ли использовать float32 без потери точности</span>
+        <span class="c1"># (это приблизительная проверка)</span>
+        <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">min</span> <span class="ow">and</span> <span class="n">s</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">:</span>
+            <span class="c1"># Дополнительная проверка на точность</span>
+            <span class="n">s32</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">s</span> <span class="o">-</span> <span class="n">s32</span><span class="p">)</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">1e-6</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s1">&#39;float32&#39;</span>
+        
+        <span class="k">return</span> <span class="s1">&#39;float64&#39;</span></div>
+
+
+<div class="viewcode-block" id="validate_data_against_schema">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.data_types.validate_data_against_schema">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_data_against_schema</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">schema</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> 
+                                <span class="n">strict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Проверяет соответствие DataFrame схеме данных.</span>
+<span class="sd">    </span>
+<span class="sd">    Функция проверяет наличие обязательных колонок, типы данных и другие</span>
+<span class="sd">    ограничения, указанные в схеме. По умолчанию проверка нестрогая (проверяются</span>
+<span class="sd">    только обязательные колонки). В строгом режиме проверяются все колонки и типы.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        df: DataFrame для проверки</span>
+<span class="sd">        schema: Словарь схемы данных</span>
+<span class="sd">        strict: Флаг строгой проверки (по умолчанию False).</span>
+<span class="sd">                Если True, проверяются все колонки из схемы и их типы.</span>
+<span class="sd">                Если False, проверяются только обязательные колонки.</span>
+<span class="sd">                </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Список найденных ошибок. Если список пустой, ошибок нет.</span>
+<span class="sd">        </span>
+<span class="sd">    Примеры:</span>
+<span class="sd">        ```python</span>
+<span class="sd">        # Создание тестового DataFrame</span>
+<span class="sd">        df = pd.DataFrame({</span>
+<span class="sd">            &#39;id&#39;: [1, 2, 3],</span>
+<span class="sd">            &#39;name&#39;: [&#39;A&#39;, &#39;B&#39;, &#39;C&#39;],</span>
+<span class="sd">            &#39;optional_col&#39;: [10, 20, 30]</span>
+<span class="sd">        })</span>
+<span class="sd">        </span>
+<span class="sd">        # Создание схемы с обязательными колонками</span>
+<span class="sd">        schema = {</span>
+<span class="sd">            &#39;id&#39;: {&#39;dtype&#39;: &#39;int&#39;, &#39;required&#39;: True},</span>
+<span class="sd">            &#39;name&#39;: {&#39;dtype&#39;: &#39;category&#39;, &#39;required&#39;: True},</span>
+<span class="sd">            &#39;missing_col&#39;: {&#39;dtype&#39;: &#39;float&#39;, &#39;required&#39;: True},</span>
+<span class="sd">            &#39;optional_col&#39;: {&#39;dtype&#39;: &#39;int&#39;, &#39;required&#39;: False}</span>
+<span class="sd">        }</span>
+<span class="sd">        </span>
+<span class="sd">        # Нестрогая проверка (выявит отсутствие обязательной колонки missing_col)</span>
+<span class="sd">        errors = validate_data_against_schema(df, schema)</span>
+<span class="sd">        print(&quot;Ошибки нестрогой проверки:&quot;, errors)</span>
+<span class="sd">        </span>
+<span class="sd">        # Строгая проверка (выявит также несоответствие типа name)</span>
+<span class="sd">        errors = validate_data_against_schema(df, schema, strict=True)</span>
+<span class="sd">        print(&quot;Ошибки строгой проверки:&quot;, errors)</span>
+<span class="sd">        </span>
+<span class="sd">        # Проверка фильтрации по размеру значений</span>
+<span class="sd">        schema_with_constraints = {</span>
+<span class="sd">            &#39;id&#39;: {&#39;dtype&#39;: &#39;int&#39;, &#39;required&#39;: True, &#39;min&#39;: 2},</span>
+<span class="sd">            &#39;name&#39;: {&#39;dtype&#39;: &#39;str&#39;, &#39;required&#39;: True}</span>
+<span class="sd">        }</span>
+<span class="sd">        errors = validate_data_against_schema(df, schema_with_constraints)</span>
+<span class="sd">        print(&quot;Ошибки с ограничениями:&quot;, errors)</span>
+<span class="sd">        ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># Проверка наличия обязательных колонок</span>
+    <span class="k">for</span> <span class="n">column</span><span class="p">,</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">schema</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;required&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="ow">and</span> <span class="n">column</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Отсутствует обязательная колонка &#39;</span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Если нет обязательных колонок или не нужна строгая проверка, возвращаем результат</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">strict</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">errors</span><span class="p">:</span>
+        <span class="c1"># Проверка типов данных для имеющихся колонок</span>
+        <span class="k">for</span> <span class="n">column</span><span class="p">,</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">schema</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">column</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="k">continue</span>
+            
+            <span class="n">dtype</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dtype&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">dtype</span><span class="p">:</span>
+                <span class="k">continue</span>
+            
+            <span class="c1"># Проверка типа данных</span>
+            <span class="k">if</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;int&#39;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">):</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Колонка &#39;</span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s2">&#39; должна быть целочисленной, текущий тип: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            
+            <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;float&#39;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">):</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Колонка &#39;</span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s2">&#39; должна быть числом с плавающей точкой, текущий тип: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            
+            <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;bool&#39;</span> <span class="ow">and</span> <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="s1">&#39;bool&#39;</span><span class="p">:</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Колонка &#39;</span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s2">&#39; должна быть логического типа, текущий тип: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            
+            <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;datetime&#39;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">datetime64</span><span class="p">):</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Колонка &#39;</span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s2">&#39; должна быть типа datetime, текущий тип: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            
+            <span class="c1"># Проверка ограничений</span>
+            <span class="k">if</span> <span class="s1">&#39;min&#39;</span> <span class="ow">in</span> <span class="n">info</span> <span class="ow">and</span> <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">info</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">]:</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Значения в колонке &#39;</span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s2">&#39; не могут быть меньше </span><span class="si">{</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="s1">&#39;max&#39;</span> <span class="ow">in</span> <span class="n">info</span> <span class="ow">and</span> <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">info</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">]:</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Значения в колонке &#39;</span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s2">&#39; не могут быть больше </span><span class="si">{</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="s1">&#39;allowed_values&#39;</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
+                <span class="n">invalid_values</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;allowed_values&#39;</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">invalid_values</span><span class="p">:</span>
+                    <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Колонка &#39;</span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s2">&#39; содержит недопустимые значения: </span><span class="si">{</span><span class="n">invalid_values</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">errors</span></div>
+
+
+<div class="viewcode-block" id="extract_schema_subset">
+<a class="viewcode-back" href="../../../api.html#core.data.data_types.extract_schema_subset">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_schema_subset</span><span class="p">(</span><span class="n">schema</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> 
+                         <span class="n">columns</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Извлекает подмножество схемы для указанных колонок.</span>
+<span class="sd">    </span>
+<span class="sd">    Функция создает новую схему, содержащую только указанные колонки из исходной схемы.</span>
+<span class="sd">    Если список колонок не указан, возвращается полная копия схемы.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        schema: Исходная схема данных</span>
+<span class="sd">        columns: Список колонок для включения в подмножество (если None, используются все колонки)</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Новая схема, содержащая только указанные колонки</span>
+<span class="sd">        </span>
+<span class="sd">    Примеры:</span>
+<span class="sd">        ```python</span>
+<span class="sd">        # Создание тестовой схемы</span>
+<span class="sd">        schema = {</span>
+<span class="sd">            &#39;id&#39;: {&#39;dtype&#39;: &#39;int&#39;, &#39;description&#39;: &#39;ID клиента&#39;},</span>
+<span class="sd">            &#39;name&#39;: {&#39;dtype&#39;: &#39;str&#39;, &#39;description&#39;: &#39;Имя клиента&#39;},</span>
+<span class="sd">            &#39;age&#39;: {&#39;dtype&#39;: &#39;int&#39;, &#39;description&#39;: &#39;Возраст клиента&#39;},</span>
+<span class="sd">            &#39;balance&#39;: {&#39;dtype&#39;: &#39;float&#39;, &#39;description&#39;: &#39;Баланс счета&#39;}</span>
+<span class="sd">        }</span>
+<span class="sd">        </span>
+<span class="sd">        # Извлечение подмножества колонок</span>
+<span class="sd">        subset = extract_schema_subset(schema, [&#39;id&#39;, &#39;name&#39;])</span>
+<span class="sd">        print(subset)  # Выведет схему только для колонок &#39;id&#39; и &#39;name&#39;</span>
+<span class="sd">        </span>
+<span class="sd">        # Извлечение всей схемы (создание копии)</span>
+<span class="sd">        full_copy = extract_schema_subset(schema)</span>
+<span class="sd">        </span>
+<span class="sd">        # Использование с DataFrame для создания подмножества данных</span>
+<span class="sd">        df = pd.DataFrame({</span>
+<span class="sd">            &#39;id&#39;: [1, 2, 3],</span>
+<span class="sd">            &#39;name&#39;: [&#39;A&#39;, &#39;B&#39;, &#39;C&#39;],</span>
+<span class="sd">            &#39;age&#39;: [25, 30, 35],</span>
+<span class="sd">            &#39;balance&#39;: [100.0, 200.0, 300.0]</span>
+<span class="sd">        })</span>
+<span class="sd">        </span>
+<span class="sd">        # Получение схемы только для числовых колонок</span>
+<span class="sd">        numeric_cols = [col for col in df.columns if np.issubdtype(df[col].dtype, np.number)]</span>
+<span class="sd">        numeric_schema = extract_schema_subset(schema, numeric_cols)</span>
+<span class="sd">        ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">columns</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">col</span><span class="p">:</span> <span class="n">info</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">schema</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    
+    <span class="k">return</span> <span class="p">{</span><span class="n">col</span><span class="p">:</span> <span class="n">info</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">schema</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">columns</span><span class="p">}</span> </div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, GPB Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

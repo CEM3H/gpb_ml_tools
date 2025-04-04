@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Установка и использование &mdash; GPB Library 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=01f34227"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            GPB Library
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules/data.html">Модуль data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/validation.html">Модуль validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/feature_selection.html">Модуль feature_selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/preprocessing.html">Модуль preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/preprocessing.html#id7">Предобработка данных</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/models.html">Модуль models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/reporting.html">Модуль reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/metrics.html">Модуль metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/utils.html">Модуль utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/container.html">Модуль container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/pipeline.html">Модуль pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extending.html">Расширение библиотеки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Тестирование</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">GPB Library</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Установка и использование</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/installation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>Установка и использование<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<section id="id2">
+<h2>Установка<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>Библиотека GPB может быть установлена с помощью pip:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>gpb-lib
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2>Зависимости<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>Библиотека требует следующие зависимости:</p>
+<ul class="simple">
+<li><p>Python &gt;= 3.8</p></li>
+<li><p>pandas &gt;= 1.3.0</p></li>
+<li><p>numpy &gt;= 1.20.0</p></li>
+<li><p>scikit-learn &gt;= 0.24.0</p></li>
+<li><p>psycopg2-binary &gt;= 2.9.0 (для работы с PostgreSQL)</p></li>
+<li><p>impyla &gt;= 0.17.0 (для работы с Impala)</p></li>
+<li><p>PyYAML &gt;= 5.4.0</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>Быстрый старт<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<section id="id5">
+<h3>Загрузка данных<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">core.data_loading</span><span class="w"> </span><span class="kn">import</span> <span class="n">FileDataLoader</span><span class="p">,</span> <span class="n">PostgresDataLoader</span><span class="p">,</span> <span class="n">ImpalaDataLoader</span>
+
+<span class="c1"># Загрузка из файла</span>
+<span class="n">file_loader</span> <span class="o">=</span> <span class="n">FileDataLoader</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">file_loader</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Загрузка из PostgreSQL</span>
+<span class="n">pg_loader</span> <span class="o">=</span> <span class="n">PostgresDataLoader</span><span class="p">(</span>
+    <span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
+    <span class="n">port</span><span class="o">=</span><span class="mi">5432</span><span class="p">,</span>
+    <span class="n">database</span><span class="o">=</span><span class="s1">&#39;mydb&#39;</span><span class="p">,</span>
+    <span class="n">user</span><span class="o">=</span><span class="s1">&#39;user&#39;</span><span class="p">,</span>
+    <span class="n">password</span><span class="o">=</span><span class="s1">&#39;password&#39;</span>
+<span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pg_loader</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="s1">&#39;SELECT * FROM mytable&#39;</span><span class="p">)</span>
+
+<span class="c1"># Загрузка из Impala</span>
+<span class="n">impala_loader</span> <span class="o">=</span> <span class="n">ImpalaDataLoader</span><span class="p">(</span>
+    <span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
+    <span class="n">port</span><span class="o">=</span><span class="mi">21050</span><span class="p">,</span>
+    <span class="n">database</span><span class="o">=</span><span class="s1">&#39;mydb&#39;</span>
+<span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">impala_loader</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="s1">&#39;SELECT * FROM mytable&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3>Валидация данных<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">core.data_validation</span><span class="w"> </span><span class="kn">import</span> <span class="n">SchemaValidator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core.data.schema</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataSchema</span><span class="p">,</span> <span class="n">ColumnSchema</span><span class="p">,</span> <span class="n">DataType</span>
+
+<span class="c1"># Создание схемы</span>
+<span class="n">schema</span> <span class="o">=</span> <span class="n">DataSchema</span><span class="p">([</span>
+    <span class="n">ColumnSchema</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">ColumnSchema</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">ColumnSchema</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">,</span> <span class="n">constraints</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;min&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">})</span>
+<span class="p">])</span>
+
+<span class="c1"># Валидация данных</span>
+<span class="n">validator</span> <span class="o">=</span> <span class="n">SchemaValidator</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+<span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h3>Отбор признаков<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">core.feature_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">FeatureSelector</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core.feature_selection.statistical</span><span class="w"> </span><span class="kn">import</span> <span class="n">VarianceThreshold</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core.feature_selection.model_based</span><span class="w"> </span><span class="kn">import</span> <span class="n">RFESelector</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+
+<span class="c1"># Создание селектора</span>
+<span class="n">selector</span> <span class="o">=</span> <span class="n">FeatureSelector</span><span class="p">([</span>
+    <span class="n">VarianceThreshold</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">),</span>
+    <span class="n">RFESelector</span><span class="p">(</span><span class="n">RandomForestClassifier</span><span class="p">(),</span> <span class="n">n_features_to_select</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="p">])</span>
+
+<span class="c1"># Отбор признаков</span>
+<span class="n">selected_features</span> <span class="o">=</span> <span class="n">selector</span><span class="o">.</span><span class="n">select_features</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id8">
+<h3>Предобработка данных<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">core.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Preprocessor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core.preprocessing.numeric</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core.preprocessing.categorical</span><span class="w"> </span><span class="kn">import</span> <span class="n">OneHotEncoder</span>
+
+<span class="c1"># Создание препроцессора</span>
+<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">Preprocessor</span><span class="p">([</span>
+    <span class="n">StandardScaler</span><span class="p">(),</span>
+    <span class="n">OneHotEncoder</span><span class="p">()</span>
+<span class="p">])</span>
+
+<span class="c1"># Предобработка данных</span>
+<span class="n">X_transformed</span> <span class="o">=</span> <span class="n">preprocessor</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id9">
+<h2>Пример полного пайплайна<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">core.data_loading</span><span class="w"> </span><span class="kn">import</span> <span class="n">FileDataLoader</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core.data_validation</span><span class="w"> </span><span class="kn">import</span> <span class="n">SchemaValidator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core.data.schema</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataSchema</span><span class="p">,</span> <span class="n">ColumnSchema</span><span class="p">,</span> <span class="n">DataType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core.feature_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">FeatureSelector</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Preprocessor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+
+<span class="c1"># Загрузка данных</span>
+<span class="n">loader</span> <span class="o">=</span> <span class="n">FileDataLoader</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Валидация данных</span>
+<span class="n">schema</span> <span class="o">=</span> <span class="n">DataSchema</span><span class="p">([</span>
+    <span class="n">ColumnSchema</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">ColumnSchema</span><span class="p">(</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">ColumnSchema</span><span class="p">(</span><span class="s1">&#39;feature1&#39;</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">FLOAT</span><span class="p">),</span>
+    <span class="n">ColumnSchema</span><span class="p">(</span><span class="s1">&#39;feature2&#39;</span><span class="p">,</span> <span class="n">DataType</span><span class="o">.</span><span class="n">STRING</span><span class="p">)</span>
+<span class="p">])</span>
+<span class="n">validator</span> <span class="o">=</span> <span class="n">SchemaValidator</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+<span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<span class="c1"># Разделение на признаки и целевую переменную</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
+
+<span class="c1"># Отбор признаков</span>
+<span class="n">selector</span> <span class="o">=</span> <span class="n">FeatureSelector</span><span class="p">([</span>
+    <span class="n">VarianceThreshold</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">),</span>
+    <span class="n">RFESelector</span><span class="p">(</span><span class="n">RandomForestClassifier</span><span class="p">(),</span> <span class="n">n_features_to_select</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="p">])</span>
+<span class="n">X_selected</span> <span class="o">=</span> <span class="n">selector</span><span class="o">.</span><span class="n">select_features</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Предобработка данных</span>
+<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">Preprocessor</span><span class="p">([</span>
+    <span class="n">StandardScaler</span><span class="p">(),</span>
+    <span class="n">OneHotEncoder</span><span class="p">()</span>
+<span class="p">])</span>
+<span class="n">X_processed</span> <span class="o">=</span> <span class="n">preprocessor</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_selected</span><span class="p">)</span>
+
+<span class="c1"># Обучение модели</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_processed</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, GPB Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

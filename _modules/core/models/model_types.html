@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>core.models.model_types &mdash; GPB Library 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            GPB Library
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Начало работы:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Установка и использование</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../architecture.html">Архитектура библиотеки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html">Конфигурация и настройка</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Основные модули:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/data.html">Модуль data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/validation.html">Модуль validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/feature_selection.html">Модуль feature_selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/preprocessing.html">Модуль preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/models.html">Модуль models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/metrics.html">Модуль metrics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Отчетность и инфраструктура:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/reporting.html">Модуль reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/utils.html">Модуль utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/container.html">Модуль container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/pipeline.html">Модуль pipeline</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Разработка:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../extending.html">Расширение библиотеки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../testing.html">Тестирование</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Примеры использования</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">GPB Library</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">core.models.model_types</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for core.models.model_types</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">catboost</span><span class="w"> </span><span class="kn">import</span> <span class="n">CatBoostClassifier</span><span class="p">,</span> <span class="n">CatBoostRegressor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.calibration</span><span class="w"> </span><span class="kn">import</span> <span class="n">CalibratedClassifierCV</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
+
+<div class="viewcode-block" id="RandomForestModel">
+<a class="viewcode-back" href="../../../modules/models.html#core.models.model_types.RandomForestModel">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RandomForestModel</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Реализация Random Forest модели&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RandomForestModel.__init__">
+<a class="viewcode-back" href="../../../modules/models.html#core.models.model_types.RandomForestModel.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_params</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model_params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="o">**</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hyperparameters</span> <span class="ow">or</span> <span class="p">{}))</span></div>
+
+        
+<div class="viewcode-block" id="RandomForestModel.train">
+<a class="viewcode-back" href="../../../modules/models.html#core.models.model_types.RandomForestModel.train">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="RandomForestModel.predict">
+<a class="viewcode-back" href="../../../modules/models.html#core.models.model_types.RandomForestModel.predict">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="RandomForestModel.predict_proba">
+<a class="viewcode-back" href="../../../modules/models.html#core.models.model_types.RandomForestModel.predict_proba">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="RandomForestModel.get_feature_importance">
+<a class="viewcode-back" href="../../../modules/models.html#core.models.model_types.RandomForestModel.get_feature_importance">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_feature_importance</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">feature_names_in_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">feature_importances_</span><span class="p">))</span></div>
+</div>
+
+
+<div class="viewcode-block" id="CatBoostModel">
+<a class="viewcode-back" href="../../../modules/models.html#core.models.model_types.CatBoostModel">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CatBoostModel</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Реализация CatBoost модели&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CatBoostModel.__init__">
+<a class="viewcode-back" href="../../../modules/models.html#core.models.model_types.CatBoostModel.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hyperparameters</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hyperparameters</span> <span class="o">=</span> <span class="n">hyperparameters</span> <span class="k">if</span> <span class="n">hyperparameters</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}</span>
+        
+        <span class="c1"># По умолчанию работаем с задачей классификации</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="s1">&#39;classification&#39;</span>
+        
+        <span class="c1"># Удаляем task_type из гиперпараметров</span>
+        <span class="k">if</span> <span class="s1">&#39;task_type&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hyperparameters</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">hyperparameters</span><span class="p">[</span><span class="s1">&#39;task_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;classification&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hyperparameters</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;task_type&#39;</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">CatBoostClassifier</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">hyperparameters</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">calibration_model</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+    
+<div class="viewcode-block" id="CatBoostModel.get_params">
+<a class="viewcode-back" href="../../../modules/models.html#core.models.model_types.CatBoostModel.get_params">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Метод для sklearn API&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;hyperparameters&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">hyperparameters</span><span class="p">}</span></div>
+
+    
+<div class="viewcode-block" id="CatBoostModel.fit">
+<a class="viewcode-back" href="../../../modules/models.html#core.models.model_types.CatBoostModel.fit">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Обучение модели</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            X: Признаки для обучения</span>
+<span class="sd">            y: Целевая переменная</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            self</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+    
+<div class="viewcode-block" id="CatBoostModel.predict">
+<a class="viewcode-back" href="../../../modules/models.html#core.models.model_types.CatBoostModel.predict">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Предсказание значений</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            X: Признаки для предсказания</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Предсказанные значения</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">calibration_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">calibration_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="CatBoostModel.predict_proba">
+<a class="viewcode-back" href="../../../modules/models.html#core.models.model_types.CatBoostModel.predict_proba">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Предсказание вероятностей</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            X: Признаки для предсказания</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Предсказанные вероятности</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">!=</span> <span class="s1">&#39;classification&#39;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Метод predict_proba доступен только для задач классификации&quot;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">calibration_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">calibration_model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="CatBoostModel.calibrate">
+<a class="viewcode-back" href="../../../modules/models.html#core.models.model_types.CatBoostModel.calibrate">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">calibrate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Калибровка вероятностей модели</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            X: Признаки для калибровки</span>
+<span class="sd">            y: Целевая переменная</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">!=</span> <span class="s1">&#39;classification&#39;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Калибровка доступна только для задач классификации&quot;</span><span class="p">)</span>
+        
+        <span class="n">calibrator</span> <span class="o">=</span> <span class="n">CalibratedClassifierCV</span><span class="p">(</span>
+            <span class="n">estimator</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+            <span class="n">method</span><span class="o">=</span><span class="s1">&#39;isotonic&#39;</span><span class="p">,</span>
+            <span class="n">cv</span><span class="o">=</span><span class="s1">&#39;prefit&#39;</span>
+        <span class="p">)</span>
+        <span class="n">calibrator</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">calibration_model</span> <span class="o">=</span> <span class="n">calibrator</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+    
+<div class="viewcode-block" id="CatBoostModel.get_feature_importance">
+<a class="viewcode-back" href="../../../modules/models.html#core.models.model_types.CatBoostModel.get_feature_importance">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_feature_importance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Получение важности признаков</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            feature_names: Названия признаков</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Словарь с важностью признаков</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">importances</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_feature_importance</span><span class="p">()</span>
+        
+        <span class="k">if</span> <span class="n">feature_names</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="sa">f</span><span class="s2">&quot;feature_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">importance</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">importance</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">importances</span><span class="p">)}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">importance</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">importance</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">importances</span><span class="p">)}</span> </div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, GPB Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

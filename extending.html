@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Расширение библиотеки &mdash; GPB Library 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=01f34227"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Тестирование" href="testing.html" />
+    <link rel="prev" title="Модуль pipeline" href="modules/pipeline.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            GPB Library
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="modules/data.html">Модуль data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/validation.html">Модуль validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/feature_selection.html">Модуль feature_selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/preprocessing.html">Модуль preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/preprocessing.html#id7">Предобработка данных</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/models.html">Модуль models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/reporting.html">Модуль reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/metrics.html">Модуль metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/utils.html">Модуль utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/container.html">Модуль container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/pipeline.html">Модуль pipeline</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Расширение библиотеки</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Создание собственного загрузчика данных</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">Создание собственного валидатора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">Создание собственного селектора признаков</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">Создание собственного препроцессора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">Регистрация пользовательских компонентов</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">Пример использования пользовательских компонентов</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Тестирование</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">GPB Library</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Расширение библиотеки</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/extending.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>Расширение библиотеки<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<section id="id2">
+<h2>Создание собственного загрузчика данных<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>Для создания собственного загрузчика данных необходимо наследоваться от базового класса <code class="docutils literal notranslate"><span class="pre">DataLoader</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">core.data_loading.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataLoader</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">CustomDataLoader</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Пользовательский загрузчик данных.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    param1 : str</span>
+<span class="sd">        Описание параметра 1</span>
+<span class="sd">    param2 : int, optional</span>
+<span class="sd">        Описание параметра 2, по умолчанию 42</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">param2</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param1</span> <span class="o">=</span> <span class="n">param1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param2</span> <span class="o">=</span> <span class="n">param2</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Загрузка данных из источника.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        source : str</span>
+<span class="sd">            Путь к источнику данных</span>
+<span class="sd">        **kwargs</span>
+<span class="sd">            Дополнительные параметры</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            Загруженные данные</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            Если источник недоступен</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Реализация загрузки данных</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2>Создание собственного валидатора<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>Для создания собственного валидатора необходимо наследоваться от базового класса <code class="docutils literal notranslate"><span class="pre">SchemaValidator</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">core.data_validation.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">SchemaValidator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core.data.schema</span><span class="w"> </span><span class="kn">import</span> <span class="n">ColumnSchema</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">CustomValidator</span><span class="p">(</span><span class="n">SchemaValidator</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Пользовательский валидатор данных.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    param1 : str</span>
+<span class="sd">        Описание параметра 1</span>
+<span class="sd">    param2 : int, optional</span>
+<span class="sd">        Описание параметра 2, по умолчанию 42</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">param2</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param1</span> <span class="o">=</span> <span class="n">param1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param2</span> <span class="o">=</span> <span class="n">param2</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_validate_custom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">series</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">schema</span><span class="p">:</span> <span class="n">ColumnSchema</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Валидация пользовательского типа данных.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        series : pd.Series</span>
+<span class="sd">            Серия данных для валидации</span>
+<span class="sd">        schema : ColumnSchema</span>
+<span class="sd">            Схема колонки</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            Если данные не соответствуют схеме</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Реализация валидации</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2>Создание собственного селектора признаков<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>Для создания собственного селектора признаков необходимо наследоваться от базового класса <code class="docutils literal notranslate"><span class="pre">FeatureSelector</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">core.feature_selection.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">FeatureSelector</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">CustomFeatureSelector</span><span class="p">(</span><span class="n">FeatureSelector</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Пользовательский селектор признаков.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    param1 : str</span>
+<span class="sd">        Описание параметра 1</span>
+<span class="sd">    param2 : int, optional</span>
+<span class="sd">        Описание параметра 2, по умолчанию 42</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">param2</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param1</span> <span class="o">=</span> <span class="n">param1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param2</span> <span class="o">=</span> <span class="n">param2</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">select_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Отбор признаков.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : pd.DataFrame</span>
+<span class="sd">            Матрица признаков</span>
+<span class="sd">        y : pd.Series</span>
+<span class="sd">            Вектор целевой переменной</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[str]</span>
+<span class="sd">            Список отобранных признаков</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Реализация отбора признаков</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h2>Создание собственного препроцессора<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>Для создания собственного препроцессора необходимо наследоваться от базового класса <code class="docutils literal notranslate"><span class="pre">Preprocessor</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">core.preprocessing.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">Preprocessor</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">CustomPreprocessor</span><span class="p">(</span><span class="n">Preprocessor</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Пользовательский препроцессор данных.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    param1 : str</span>
+<span class="sd">        Описание параметра 1</span>
+<span class="sd">    param2 : int, optional</span>
+<span class="sd">        Описание параметра 2, по умолчанию 42</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">param2</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param1</span> <span class="o">=</span> <span class="n">param1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param2</span> <span class="o">=</span> <span class="n">param2</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;CustomPreprocessor&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Обучение препроцессора.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : pd.DataFrame</span>
+<span class="sd">            Матрица признаков</span>
+<span class="sd">        y : pd.Series, optional</span>
+<span class="sd">            Вектор целевой переменной</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        CustomPreprocessor</span>
+<span class="sd">            Обученный препроцессор</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Реализация обучения</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Применение преобразований.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : pd.DataFrame</span>
+<span class="sd">            Матрица признаков</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            Преобразованная матрица признаков</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Реализация преобразований</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h2>Регистрация пользовательских компонентов<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p>Для регистрации пользовательских компонентов необходимо добавить их в соответствующие модули:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># В файле core/data_loading/__init__.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.custom_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomDataLoader</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;DataLoader&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;FileDataLoader&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;PostgresDataLoader&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ImpalaDataLoader&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;CustomDataLoader&#39;</span>  <span class="c1"># Добавляем пользовательский загрузчик</span>
+<span class="p">]</span>
+
+<span class="c1"># В файле core/data_validation/__init__.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.custom_validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomValidator</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;SchemaValidator&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;CustomValidator&#39;</span>  <span class="c1"># Добавляем пользовательский валидатор</span>
+<span class="p">]</span>
+
+<span class="c1"># В файле core/feature_selection/__init__.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.custom_selector</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomFeatureSelector</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;FeatureSelector&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;CustomFeatureSelector&#39;</span>  <span class="c1"># Добавляем пользовательский селектор</span>
+<span class="p">]</span>
+
+<span class="c1"># В файле core/preprocessing/__init__.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.custom_preprocessor</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomPreprocessor</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;Preprocessor&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;CustomPreprocessor&#39;</span>  <span class="c1"># Добавляем пользовательский препроцессор</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h2>Пример использования пользовательских компонентов<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">core.data_loading</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomDataLoader</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core.data_validation</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomValidator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core.feature_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomFeatureSelector</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomPreprocessor</span>
+
+<span class="c1"># Создание пользовательских компонентов</span>
+<span class="n">loader</span> <span class="o">=</span> <span class="n">CustomDataLoader</span><span class="p">(</span><span class="n">param1</span><span class="o">=</span><span class="s1">&#39;value1&#39;</span><span class="p">)</span>
+<span class="n">validator</span> <span class="o">=</span> <span class="n">CustomValidator</span><span class="p">(</span><span class="n">param1</span><span class="o">=</span><span class="s1">&#39;value2&#39;</span><span class="p">)</span>
+<span class="n">selector</span> <span class="o">=</span> <span class="n">CustomFeatureSelector</span><span class="p">(</span><span class="n">param1</span><span class="o">=</span><span class="s1">&#39;value3&#39;</span><span class="p">)</span>
+<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">CustomPreprocessor</span><span class="p">(</span><span class="n">param1</span><span class="o">=</span><span class="s1">&#39;value4&#39;</span><span class="p">)</span>
+
+<span class="c1"># Использование в пайплайне</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
+<span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">X_selected</span> <span class="o">=</span> <span class="n">selector</span><span class="o">.</span><span class="n">select_features</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">X_processed</span> <span class="o">=</span> <span class="n">preprocessor</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_selected</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules/pipeline.html" class="btn btn-neutral float-left" title="Модуль pipeline" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="testing.html" class="btn btn-neutral float-right" title="Тестирование" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, GPB Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

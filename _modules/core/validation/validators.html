@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>core.validation.validators &mdash; GPB Library 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            GPB Library
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Начало работы:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Установка и использование</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../architecture.html">Архитектура библиотеки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html">Конфигурация и настройка</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Основные модули:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/data.html">Модуль data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/validation.html">Модуль validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/feature_selection.html">Модуль feature_selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/preprocessing.html">Модуль preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/models.html">Модуль models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/metrics.html">Модуль metrics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Отчетность и инфраструктура:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/reporting.html">Модуль reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/utils.html">Модуль utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/container.html">Модуль container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/pipeline.html">Модуль pipeline</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Разработка:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../extending.html">Расширение библиотеки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../testing.html">Тестирование</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Примеры использования</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">GPB Library</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">core.validation.validators</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for core.validation.validators</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModelValidator</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..metrics.classification</span><span class="w"> </span><span class="kn">import</span> <span class="n">calculate_basic_metrics</span><span class="p">,</span> <span class="n">calculate_cross_val_metrics</span>
+
+<div class="viewcode-block" id="DefaultModelValidator">
+<a class="viewcode-back" href="../../../modules/validation.html#core.validation.validators.DefaultModelValidator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DefaultModelValidator</span><span class="p">(</span><span class="n">ModelValidator</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Реализация стандартного валидатора модели&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="DefaultModelValidator.__init__">
+<a class="viewcode-back" href="../../../modules/validation.html#core.validation.validators.DefaultModelValidator.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cv</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">validation_params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;cv&#39;</span><span class="p">:</span> <span class="n">cv</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cv</span> <span class="o">=</span> <span class="n">cv</span></div>
+
+        
+<div class="viewcode-block" id="DefaultModelValidator.validate">
+<a class="viewcode-back" href="../../../modules/validation.html#core.validation.validators.DefaultModelValidator.validate">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Валидация модели</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            model: Обученная модель</span>
+<span class="sd">            X: Признаки</span>
+<span class="sd">            y: Целевая переменная</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Dict: Метрики качества модели</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Рассчитываем метрики на всем наборе данных</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">y_pred_proba</span> <span class="o">=</span> <span class="kc">None</span>
+        
+        <span class="c1"># Пробуем получить вероятностные предсказания, если модель поддерживает</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">y_pred_proba</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+            <span class="k">pass</span>
+            
+        <span class="c1"># Рассчитываем базовые метрики</span>
+        <span class="n">metrics</span> <span class="o">=</span> <span class="n">calculate_basic_metrics</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">y_pred_proba</span><span class="p">)</span>
+        
+        <span class="c1"># Рассчитываем метрики с использованием кросс-валидации</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">cv_metrics</span> <span class="o">=</span> <span class="n">calculate_cross_val_metrics</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cv</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;roc_auc&#39;</span><span class="p">)</span>
+            <span class="n">metrics</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">cv_metrics</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+            <span class="c1"># В случае ошибок при кросс-валидации (например, для регрессии)</span>
+            <span class="c1"># или если модель не поддерживает необходимые методы</span>
+            <span class="n">metrics</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+                <span class="s1">&#39;cv_roc_auc_mean&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+                <span class="s1">&#39;cv_roc_auc_std&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="p">})</span>
+        
+        <span class="k">return</span> <span class="n">metrics</span> </div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, GPB Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

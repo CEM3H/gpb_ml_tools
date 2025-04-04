@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Модуль pipeline &mdash; GPB Library 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=01f34227"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Расширение библиотеки" href="../extending.html" />
+    <link rel="prev" title="Модуль container" href="container.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            GPB Library
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Начало работы:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Установка и использование</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Архитектура библиотеки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Конфигурация и настройка</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Основные модули:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Модуль data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="validation.html">Модуль validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_selection.html">Модуль feature_selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Модуль preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Модуль models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Модуль metrics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Отчетность и инфраструктура:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="reporting.html">Модуль reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Модуль utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="container.html">Модуль container</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Модуль pipeline</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Основные классы</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#modelpipeline">ModelPipeline</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#core.pipeline.ModelPipeline"><code class="docutils literal notranslate"><span class="pre">ModelPipeline</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Примеры использования</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Создание и запуск пайплайна</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Разработка:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending.html">Расширение библиотеки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testing.html">Тестирование</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Примеры использования</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">GPB Library</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Модуль pipeline</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/pipeline.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pipeline">
+<h1>Модуль pipeline<a class="headerlink" href="#pipeline" title="Link to this heading"></a></h1>
+<p>Модуль пайплайна предоставляет инструменты для управления процессом разработки
+моделей машинного обучения. Включает загрузку данных, предобработку, отбор признаков,
+обучение, валидацию и создание отчетов.</p>
+<section id="id1">
+<h2>Основные классы<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<section id="modelpipeline">
+<h3>ModelPipeline<a class="headerlink" href="#modelpipeline" title="Link to this heading"></a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="core.pipeline.ModelPipeline">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">core.pipeline.</span></span><span class="sig-name descname"><span class="pre">ModelPipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_loader</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="data.html#core.data.base.DataLoader" title="core.data.base.DataLoader"><span class="pre">DataLoader</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">preprocessor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="preprocessing.html#core.preprocessing.base.DataPreprocessor" title="core.preprocessing.base.DataPreprocessor"><span class="pre">DataPreprocessor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_selector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="feature_selection.html#core.feature_selection.base.FeatureSelector" title="core.feature_selection.base.FeatureSelector"><span class="pre">FeatureSelector</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#core.models.base.BaseModel" title="core.models.base.BaseModel"><span class="pre">BaseModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">validator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ModelValidator</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/pipeline.html#ModelPipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#core.pipeline.ModelPipeline" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Класс для управления пайплайном разработки модели</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="core.pipeline.ModelPipeline.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_loader</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="data.html#core.data.base.DataLoader" title="core.data.base.DataLoader"><span class="pre">DataLoader</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">preprocessor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="preprocessing.html#core.preprocessing.base.DataPreprocessor" title="core.preprocessing.base.DataPreprocessor"><span class="pre">DataPreprocessor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_selector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="feature_selection.html#core.feature_selection.base.FeatureSelector" title="core.feature_selection.base.FeatureSelector"><span class="pre">FeatureSelector</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#core.models.base.BaseModel" title="core.models.base.BaseModel"><span class="pre">BaseModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">validator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ModelValidator</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/pipeline.html#ModelPipeline.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#core.pipeline.ModelPipeline.__init__" title="Link to this definition"></a></dt>
+<dd><p>Инициализация пайплайна</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_loader</strong> – загрузчик данных</p></li>
+<li><p><strong>preprocessor</strong> – препроцессор</p></li>
+<li><p><strong>feature_selector</strong> – селектор признаков</p></li>
+<li><p><strong>model</strong> – модель</p></li>
+<li><p><strong>validator</strong> – валидатор</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="core.pipeline.ModelPipeline.load_data">
+<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/core/pipeline.html#ModelPipeline.load_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#core.pipeline.ModelPipeline.load_data" title="Link to this definition"></a></dt>
+<dd><p>Загрузка данных</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="core.pipeline.ModelPipeline.preprocess_data">
+<span class="sig-name descname"><span class="pre">preprocess_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_column</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'target'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/core/pipeline.html#ModelPipeline.preprocess_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#core.pipeline.ModelPipeline.preprocess_data" title="Link to this definition"></a></dt>
+<dd><p>Препроцессинг данных</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="core.pipeline.ModelPipeline.select_features">
+<span class="sig-name descname"><span class="pre">select_features</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/core/pipeline.html#ModelPipeline.select_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#core.pipeline.ModelPipeline.select_features" title="Link to this definition"></a></dt>
+<dd><p>Отбор признаков</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="core.pipeline.ModelPipeline.train_model">
+<span class="sig-name descname"><span class="pre">train_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/core/pipeline.html#ModelPipeline.train_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#core.pipeline.ModelPipeline.train_model" title="Link to this definition"></a></dt>
+<dd><p>Обучение модели</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="core.pipeline.ModelPipeline.calibrate_model">
+<span class="sig-name descname"><span class="pre">calibrate_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/core/pipeline.html#ModelPipeline.calibrate_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#core.pipeline.ModelPipeline.calibrate_model" title="Link to this definition"></a></dt>
+<dd><p>Калибровка модели</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="core.pipeline.ModelPipeline.validate_model">
+<span class="sig-name descname"><span class="pre">validate_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.13)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/core/pipeline.html#ModelPipeline.validate_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#core.pipeline.ModelPipeline.validate_model" title="Link to this definition"></a></dt>
+<dd><p>Валидация модели</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="core.pipeline.ModelPipeline.create_container">
+<span class="sig-name descname"><span class="pre">create_container</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="container.html#core.container.ModelMetadata" title="core.container.ModelMetadata"><span class="pre">ModelMetadata</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/core/pipeline.html#ModelPipeline.create_container"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#core.pipeline.ModelPipeline.create_container" title="Link to this definition"></a></dt>
+<dd><p>Создание контейнера модели</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="core.pipeline.ModelPipeline.run_pipeline">
+<span class="sig-name descname"><span class="pre">run_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="container.html#core.container.ModelMetadata" title="core.container.ModelMetadata"><span class="pre">ModelMetadata</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="container.html#core.container.ModelContainer" title="core.container.ModelContainer"><span class="pre">ModelContainer</span></a></span></span><a class="reference internal" href="../_modules/core/pipeline.html#ModelPipeline.run_pipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#core.pipeline.ModelPipeline.run_pipeline" title="Link to this definition"></a></dt>
+<dd><p>Запуск полного пайплайна</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>metadata</strong> – метаданные модели</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>контейнер с обученной моделью</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="container.html#core.container.ModelContainer" title="core.container.ModelContainer">ModelContainer</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="core.pipeline.ModelPipeline.generate_report">
+<span class="sig-name descname"><span class="pre">generate_report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/core/pipeline.html#ModelPipeline.generate_report"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#core.pipeline.ModelPipeline.generate_report" title="Link to this definition"></a></dt>
+<dd><p>Генерация отчета о модели в формате MS Word</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>output_path</strong> – путь для сохранения отчета</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>путь к сохраненному отчету</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="id2">
+<h2>Примеры использования<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<section id="id3">
+<h3>Создание и запуск пайплайна<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">core.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModelPipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core.container</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModelMetadata</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core.data.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core.preprocessing.preprocessors</span><span class="w"> </span><span class="kn">import</span> <span class="n">DefaultPreprocessor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core.feature_selection.selectors</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestFeatureSelector</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core.models.model_types</span><span class="w"> </span><span class="kn">import</span> <span class="n">CatBoostModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core.validation.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModelValidator</span>
+
+<span class="c1"># Создаем компоненты пайплайна</span>
+<span class="n">data_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="s1">&#39;path/to/data.csv&#39;</span><span class="p">)</span>
+<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">DefaultPreprocessor</span><span class="p">(</span>
+    <span class="n">numeric_features</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;income&#39;</span><span class="p">],</span>
+    <span class="n">categorical_features</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="s1">&#39;education&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">feature_selector</span> <span class="o">=</span> <span class="n">RandomForestFeatureSelector</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">CatBoostModel</span><span class="p">({</span>
+    <span class="s1">&#39;iterations&#39;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
+    <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.1</span>
+<span class="p">})</span>
+<span class="n">validator</span> <span class="o">=</span> <span class="n">ModelValidator</span><span class="p">()</span>
+
+<span class="c1"># Создаем пайплайн</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">ModelPipeline</span><span class="p">(</span>
+    <span class="n">data_loader</span><span class="o">=</span><span class="n">data_loader</span><span class="p">,</span>
+    <span class="n">preprocessor</span><span class="o">=</span><span class="n">preprocessor</span><span class="p">,</span>
+    <span class="n">feature_selector</span><span class="o">=</span><span class="n">feature_selector</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+    <span class="n">validator</span><span class="o">=</span><span class="n">validator</span>
+<span class="p">)</span>
+
+<span class="c1"># Создаем метаданные</span>
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">ModelMetadata</span><span class="p">(</span>
+    <span class="n">model_id</span><span class="o">=</span><span class="s1">&#39;model_001&#39;</span><span class="p">,</span>
+    <span class="n">model_name</span><span class="o">=</span><span class="s1">&#39;Customer Churn Model&#39;</span><span class="p">,</span>
+    <span class="n">author</span><span class="o">=</span><span class="s1">&#39;Data Science Team&#39;</span><span class="p">,</span>
+    <span class="n">target_description</span><span class="o">=</span><span class="s1">&#39;Вероятность оттока клиента&#39;</span><span class="p">,</span>
+    <span class="n">features_description</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="s1">&#39;Возраст клиента&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;income&#39;</span><span class="p">:</span> <span class="s1">&#39;Доход клиента&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;gender&#39;</span><span class="p">:</span> <span class="s1">&#39;Пол клиента&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;education&#39;</span><span class="p">:</span> <span class="s1">&#39;Уровень образования&#39;</span>
+    <span class="p">},</span>
+    <span class="n">train_tables</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;customers.csv&#39;</span><span class="p">],</span>
+    <span class="n">created_at</span><span class="o">=</span><span class="s1">&#39;2024-04-01&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># Запускаем пайплайн</span>
+<span class="n">container</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">run_pipeline</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span>
+
+<span class="c1"># Генерируем отчет</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">generate_report</span><span class="p">(</span><span class="s1">&#39;model_report.docx&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="container.html" class="btn btn-neutral float-left" title="Модуль container" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../extending.html" class="btn btn-neutral float-right" title="Расширение библиотеки" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, GPB Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

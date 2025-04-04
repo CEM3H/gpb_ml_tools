@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Архитектура библиотеки &mdash; GPB Library 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=01f34227"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            GPB Library
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules/data.html">Модуль data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/validation.html">Модуль validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/feature_selection.html">Модуль feature_selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/preprocessing.html">Модуль preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/preprocessing.html#id7">Предобработка данных</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/models.html">Модуль models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/reporting.html">Модуль reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/metrics.html">Модуль metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/utils.html">Модуль utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/container.html">Модуль container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/pipeline.html">Модуль pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extending.html">Расширение библиотеки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Тестирование</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">GPB Library</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Архитектура библиотеки</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/architecture.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>Архитектура библиотеки<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<section id="id2">
+<h2>Обзор<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>Библиотека GPB построена по модульному принципу и состоит из следующих основных компонентов:</p>
+<ul class="simple">
+<li><p>Модуль загрузки данных (<code class="docutils literal notranslate"><span class="pre">data_loading</span></code>)</p></li>
+<li><p>Модуль валидации данных (<code class="docutils literal notranslate"><span class="pre">data_validation</span></code>)</p></li>
+<li><p>Модуль отбора признаков (<code class="docutils literal notranslate"><span class="pre">feature_selection</span></code>)</p></li>
+<li><p>Модуль предобработки данных (<code class="docutils literal notranslate"><span class="pre">preprocessing</span></code>)</p></li>
+</ul>
+<p>Каждый модуль представляет собой независимый компонент, который может использоваться как отдельно, так и в составе полного пайплайна обработки данных.</p>
+</section>
+<section id="id3">
+<h2>Модуль загрузки данных<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<section id="id4">
+<h3>Структура<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>core/
+└── data_loading/
+    ├── __init__.py
+    ├── base.py
+    ├── file_loader.py
+    ├── postgres_loader.py
+    └── impala_loader.py
+</pre></div>
+</div>
+<p>Основные классы:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">DataLoader</span></code> - базовый класс для загрузки данных</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FileDataLoader</span></code> - загрузка данных из файлов (CSV, JSON, YAML)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PostgresDataLoader</span></code> - загрузка данных из PostgreSQL</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ImpalaDataLoader</span></code> - загрузка данных из Impala</p></li>
+</ul>
+</section>
+</section>
+<section id="id5">
+<h2>Модуль валидации данных<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<section id="id6">
+<h3>Структура<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>core/
+└── data_validation/
+    ├── __init__.py
+    ├── base.py
+    ├── schema.py
+    └── validators/
+        ├── __init__.py
+        ├── base.py
+        ├── numeric.py
+        ├── string.py
+        └── datetime.py
+</pre></div>
+</div>
+<p>Основные классы:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">DataSchema</span></code> - описание структуры данных</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ColumnSchema</span></code> - описание колонки данных</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SchemaValidator</span></code> - базовый валидатор</p></li>
+<li><p>Специализированные валидаторы для разных типов данных</p></li>
+</ul>
+</section>
+</section>
+<section id="id7">
+<h2>Модуль отбора признаков<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<section id="id8">
+<h3>Структура<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>core/
+└── feature_selection/
+    ├── __init__.py
+    ├── base.py
+    ├── statistical/
+    │   ├── __init__.py
+    │   ├── variance.py
+    │   ├── correlation.py
+    │   └── mutual_info.py
+    └── model_based/
+        ├── __init__.py
+        ├── rfe.py
+        └── importance.py
+</pre></div>
+</div>
+<p>Основные классы:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">FeatureSelector</span></code> - базовый класс для отбора признаков</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">StatisticalFeatureSelector</span></code> - отбор на основе статистических методов</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ModelBasedFeatureSelector</span></code> - отбор на основе моделей машинного обучения</p></li>
+</ul>
+</section>
+</section>
+<section id="id9">
+<h2>Модуль предобработки данных<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<section id="id10">
+<h3>Структура<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>core/
+└── preprocessing/
+    ├── __init__.py
+    ├── base.py
+    ├── numeric/
+    │   ├── __init__.py
+    │   ├── scalers.py
+    │   └── transformers.py
+    ├── categorical/
+    │   ├── __init__.py
+    │   ├── encoders.py
+    │   └── transformers.py
+    └── imputation/
+        ├── __init__.py
+        ├── simple.py
+        └── knn.py
+</pre></div>
+</div>
+<p>Основные классы:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Preprocessor</span></code> - базовый класс для предобработки данных</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NumericPreprocessor</span></code> - предобработка числовых признаков</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CategoricalPreprocessor</span></code> - предобработка категориальных признаков</p></li>
+</ul>
+</section>
+</section>
+<section id="id11">
+<h2>Взаимодействие компонентов<a class="headerlink" href="#id11" title="Link to this heading"></a></h2>
+<p>Компоненты библиотеки взаимодействуют следующим образом:</p>
+<ol class="arabic simple">
+<li><p>Данные загружаются с помощью одного из загрузчиков (<code class="docutils literal notranslate"><span class="pre">DataLoader</span></code>)</p></li>
+<li><p>Загруженные данные проверяются на соответствие схеме (<code class="docutils literal notranslate"><span class="pre">SchemaValidator</span></code>)</p></li>
+<li><p>Из данных отбираются наиболее значимые признаки (<code class="docutils literal notranslate"><span class="pre">FeatureSelector</span></code>)</p></li>
+<li><p>Отобранные признаки проходят предобработку (<code class="docutils literal notranslate"><span class="pre">Preprocessor</span></code>)</p></li>
+<li><p>Подготовленные данные могут быть использованы для обучения моделей</p></li>
+</ol>
+<p>Пример взаимодействия:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Загрузка данных</span>
+<span class="n">loader</span> <span class="o">=</span> <span class="n">FileDataLoader</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Валидация</span>
+<span class="n">validator</span> <span class="o">=</span> <span class="n">SchemaValidator</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+<span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<span class="c1"># Отбор признаков</span>
+<span class="n">selector</span> <span class="o">=</span> <span class="n">FeatureSelector</span><span class="p">([</span><span class="o">...</span><span class="p">])</span>
+<span class="n">X_selected</span> <span class="o">=</span> <span class="n">selector</span><span class="o">.</span><span class="n">select_features</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Предобработка</span>
+<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">Preprocessor</span><span class="p">([</span><span class="o">...</span><span class="p">])</span>
+<span class="n">X_processed</span> <span class="o">=</span> <span class="n">preprocessor</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_selected</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id12">
+<h2>Расширяемость<a class="headerlink" href="#id12" title="Link to this heading"></a></h2>
+<p>Библиотека разработана с учетом возможности расширения. Вы можете:</p>
+<ol class="arabic simple">
+<li><p>Создавать собственные загрузчики данных, наследуясь от <code class="docutils literal notranslate"><span class="pre">DataLoader</span></code></p></li>
+<li><p>Добавлять новые типы валидаторов, наследуясь от <code class="docutils literal notranslate"><span class="pre">SchemaValidator</span></code></p></li>
+<li><p>Реализовывать новые методы отбора признаков, наследуясь от <code class="docutils literal notranslate"><span class="pre">FeatureSelector</span></code></p></li>
+<li><p>Создавать собственные преобразователи данных, наследуясь от <code class="docutils literal notranslate"><span class="pre">Preprocessor</span></code></p></li>
+</ol>
+<p>Пример создания собственного валидатора:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">CustomValidator</span><span class="p">(</span><span class="n">SchemaValidator</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_validate_custom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">series</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">schema</span><span class="p">:</span> <span class="n">ColumnSchema</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Реализация собственной логики валидации</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, GPB Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

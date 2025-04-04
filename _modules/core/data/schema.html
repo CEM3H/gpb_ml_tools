@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>core.data.schema &mdash; GPB Library 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            GPB Library
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Установка и использование</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../architecture.html">Архитектура библиотеки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../configuration.html">Конфигурация и настройка</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Примеры использования</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/data.html">Модуль data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/validation.html">Модуль validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/feature_selection.html">Модуль feature_selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/preprocessing.html">Модуль preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/preprocessing.html#id7">Предобработка данных</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/models.html">Модуль models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/reporting.html">Модуль reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/metrics.html">Модуль metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/utils.html">Модуль utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/container.html">Модуль container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/pipeline.html">Модуль pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../extending.html">Расширение библиотеки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../testing.html">Тестирование</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">GPB Library</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">core.data.schema</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for core.data.schema</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Модуль для работы со схемами данных.</span>
+
+<span class="sd">Этот модуль предоставляет классы для описания и валидации схем данных.</span>
+<span class="sd">Схема данных определяет структуру DataFrame, включая типы данных колонок,</span>
+<span class="sd">ограничения на значения и метаданные.</span>
+
+<span class="sd">Примеры использования:</span>
+<span class="sd">    ```python</span>
+<span class="sd">    # Создание схемы с описанием колонок</span>
+<span class="sd">    schema = DataSchema([</span>
+<span class="sd">        ColumnSchema(</span>
+<span class="sd">            name=&#39;id&#39;,</span>
+<span class="sd">            data_type=DataType.INTEGER,</span>
+<span class="sd">            required=True,</span>
+<span class="sd">            description=&#39;Уникальный идентификатор записи&#39;,</span>
+<span class="sd">            constraints={&#39;unique&#39;: True}</span>
+<span class="sd">        ),</span>
+<span class="sd">        ColumnSchema(</span>
+<span class="sd">            name=&#39;age&#39;,</span>
+<span class="sd">            data_type=DataType.INTEGER,</span>
+<span class="sd">            required=True,</span>
+<span class="sd">            description=&#39;Возраст пользователя&#39;,</span>
+<span class="sd">            constraints={&#39;min&#39;: 0, &#39;max&#39;: 150}</span>
+<span class="sd">        ),</span>
+<span class="sd">        ColumnSchema(</span>
+<span class="sd">            name=&#39;email&#39;,</span>
+<span class="sd">            data_type=DataType.STRING,</span>
+<span class="sd">            required=True,</span>
+<span class="sd">            description=&#39;Email пользователя&#39;,</span>
+<span class="sd">            constraints={&#39;pattern&#39;: r&#39;^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$&#39;}</span>
+<span class="sd">        ),</span>
+<span class="sd">        ColumnSchema(</span>
+<span class="sd">            name=&#39;status&#39;,</span>
+<span class="sd">            data_type=DataType.CATEGORICAL,</span>
+<span class="sd">            required=True,</span>
+<span class="sd">            description=&#39;Статус пользователя&#39;,</span>
+<span class="sd">            categories=[&#39;active&#39;, &#39;inactive&#39;, &#39;blocked&#39;]</span>
+<span class="sd">        )</span>
+<span class="sd">    ])</span>
+
+<span class="sd">    # Загрузка схемы из файла</span>
+<span class="sd">    schema = DataSchema.from_file(&#39;schemas/users.json&#39;)</span>
+
+<span class="sd">    # Создание схемы на основе DataFrame</span>
+<span class="sd">    df = pd.DataFrame({</span>
+<span class="sd">        &#39;id&#39;: [1, 2, 3],</span>
+<span class="sd">        &#39;age&#39;: [25, 30, 35],</span>
+<span class="sd">        &#39;email&#39;: [&#39;user1@example.com&#39;, &#39;user2@example.com&#39;, &#39;user3@example.com&#39;],</span>
+<span class="sd">        &#39;status&#39;: [&#39;active&#39;, &#39;inactive&#39;, &#39;active&#39;]</span>
+<span class="sd">    })</span>
+<span class="sd">    schema = DataSchema.from_dataframe(df)</span>
+
+<span class="sd">    # Сохранение схемы в файл</span>
+<span class="sd">    schema.save(&#39;schemas/users.json&#39;)</span>
+
+<span class="sd">    # Применение схемы к DataFrame</span>
+<span class="sd">    df = schema.apply_to_dataframe(df)</span>
+<span class="sd">    ```</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.data_types</span><span class="w"> </span><span class="kn">import</span> <span class="n">infer_dtypes</span><span class="p">,</span> <span class="n">apply_dtypes_from_schema</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">DataType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Перечисление поддерживаемых типов данных для колонок.</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    INTEGER : str</span>
+<span class="sd">        Целочисленный тип данных. Примеры: 1, 42, -100</span>
+<span class="sd">    FLOAT : str</span>
+<span class="sd">        Числа с плавающей точкой. Примеры: 1.5, 3.14, -0.001</span>
+<span class="sd">    STRING : str</span>
+<span class="sd">        Строковый тип данных. Примеры: &quot;Hello&quot;, &quot;123&quot;, &quot;user@example.com&quot;</span>
+<span class="sd">    DATETIME : str</span>
+<span class="sd">        Дата и время. Примеры: &quot;2024-03-20&quot;, &quot;2024-03-20 15:30:00&quot;</span>
+<span class="sd">    BOOLEAN : str</span>
+<span class="sd">        Логический тип данных. Примеры: True, False</span>
+<span class="sd">    CATEGORICAL : str</span>
+<span class="sd">        Категориальный тип данных. Примеры: [&quot;active&quot;, &quot;inactive&quot;, &quot;blocked&quot;]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">INTEGER</span> <span class="o">=</span> <span class="s1">&#39;integer&#39;</span>
+    <span class="n">FLOAT</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span>
+    <span class="n">STRING</span> <span class="o">=</span> <span class="s1">&#39;string&#39;</span>
+    <span class="n">DATETIME</span> <span class="o">=</span> <span class="s1">&#39;datetime&#39;</span>
+    <span class="n">BOOLEAN</span> <span class="o">=</span> <span class="s1">&#39;boolean&#39;</span>
+    <span class="n">CATEGORICAL</span> <span class="o">=</span> <span class="s1">&#39;categorical&#39;</span>
+
+
+<div class="viewcode-block" id="ColumnSchema">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.schema.ColumnSchema">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ColumnSchema</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Класс для описания схемы отдельной колонки данных.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    name : str</span>
+<span class="sd">        Имя колонки</span>
+<span class="sd">    data_type : DataType</span>
+<span class="sd">        Тип данных колонки</span>
+<span class="sd">    required : bool, optional</span>
+<span class="sd">        Флаг обязательности колонки, по умолчанию False</span>
+<span class="sd">    description : str, optional</span>
+<span class="sd">        Описание колонки, по умолчанию пустая строка</span>
+<span class="sd">    categories : List[str], optional</span>
+<span class="sd">        Список допустимых категорий для категориальных данных</span>
+<span class="sd">    constraints : Dict[str, Any], optional</span>
+<span class="sd">        Словарь с ограничениями на значения. Поддерживаемые ограничения:</span>
+<span class="sd">        - unique: bool - значения должны быть уникальными</span>
+<span class="sd">        - min: float/int - минимальное значение</span>
+<span class="sd">        - max: float/int - максимальное значение</span>
+<span class="sd">        - pattern: str - регулярное выражение для строковых значений</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    ```python</span>
+<span class="sd">    # Создание схемы для числовой колонки</span>
+<span class="sd">    age_schema = ColumnSchema(</span>
+<span class="sd">        name=&#39;age&#39;,</span>
+<span class="sd">        data_type=DataType.INTEGER,</span>
+<span class="sd">        required=True,</span>
+<span class="sd">        description=&#39;Возраст пользователя&#39;,</span>
+<span class="sd">        constraints={&#39;min&#39;: 0, &#39;max&#39;: 150}</span>
+<span class="sd">    )</span>
+
+<span class="sd">    # Создание схемы для строковой колонки с паттерном</span>
+<span class="sd">    email_schema = ColumnSchema(</span>
+<span class="sd">        name=&#39;email&#39;,</span>
+<span class="sd">        data_type=DataType.STRING,</span>
+<span class="sd">        required=True,</span>
+<span class="sd">        description=&#39;Email пользователя&#39;,</span>
+<span class="sd">        constraints={&#39;pattern&#39;: r&#39;^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$&#39;}</span>
+<span class="sd">    )</span>
+
+<span class="sd">    # Создание схемы для категориальной колонки</span>
+<span class="sd">    status_schema = ColumnSchema(</span>
+<span class="sd">        name=&#39;status&#39;,</span>
+<span class="sd">        data_type=DataType.CATEGORICAL,</span>
+<span class="sd">        required=True,</span>
+<span class="sd">        description=&#39;Статус пользователя&#39;,</span>
+<span class="sd">        categories=[&#39;active&#39;, &#39;inactive&#39;, &#39;blocked&#39;]</span>
+<span class="sd">    )</span>
+<span class="sd">    ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="ColumnSchema.__init__">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.schema.ColumnSchema.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">data_type</span><span class="p">:</span> <span class="n">DataType</span><span class="p">,</span>
+        <span class="n">required</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">categories</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">constraints</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="n">data_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">required</span> <span class="o">=</span> <span class="n">required</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">categories</span> <span class="o">=</span> <span class="n">categories</span> <span class="ow">or</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">constraints</span> <span class="o">=</span> <span class="n">constraints</span> <span class="ow">or</span> <span class="p">{}</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="DataSchema">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.schema.DataSchema">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DataSchema</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Класс для работы со схемами данных.</span>
+<span class="sd">    </span>
+<span class="sd">    Схема данных описывает структуру DataFrame и содержит:</span>
+<span class="sd">    - Типы данных колонок</span>
+<span class="sd">    - Описания колонок</span>
+<span class="sd">    - Флаги обязательности</span>
+<span class="sd">    - Ограничения на значения</span>
+<span class="sd">    - Метаданные</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    columns : List[ColumnSchema], optional</span>
+<span class="sd">        Список схем колонок. Если None, создается пустая схема.</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    ```python</span>
+<span class="sd">    # Создание схемы с описанием колонок</span>
+<span class="sd">    schema = DataSchema([</span>
+<span class="sd">        ColumnSchema(</span>
+<span class="sd">            name=&#39;id&#39;,</span>
+<span class="sd">            data_type=DataType.INTEGER,</span>
+<span class="sd">            required=True,</span>
+<span class="sd">            description=&#39;Уникальный идентификатор записи&#39;,</span>
+<span class="sd">            constraints={&#39;unique&#39;: True}</span>
+<span class="sd">        ),</span>
+<span class="sd">        ColumnSchema(</span>
+<span class="sd">            name=&#39;age&#39;,</span>
+<span class="sd">            data_type=DataType.INTEGER,</span>
+<span class="sd">            required=True,</span>
+<span class="sd">            description=&#39;Возраст пользователя&#39;,</span>
+<span class="sd">            constraints={&#39;min&#39;: 0, &#39;max&#39;: 150}</span>
+<span class="sd">        ),</span>
+<span class="sd">        ColumnSchema(</span>
+<span class="sd">            name=&#39;email&#39;,</span>
+<span class="sd">            data_type=DataType.STRING,</span>
+<span class="sd">            required=True,</span>
+<span class="sd">            description=&#39;Email пользователя&#39;,</span>
+<span class="sd">            constraints={&#39;pattern&#39;: r&#39;^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$&#39;}</span>
+<span class="sd">        ),</span>
+<span class="sd">        ColumnSchema(</span>
+<span class="sd">            name=&#39;status&#39;,</span>
+<span class="sd">            data_type=DataType.CATEGORICAL,</span>
+<span class="sd">            required=True,</span>
+<span class="sd">            description=&#39;Статус пользователя&#39;,</span>
+<span class="sd">            categories=[&#39;active&#39;, &#39;inactive&#39;, &#39;blocked&#39;]</span>
+<span class="sd">        )</span>
+<span class="sd">    ])</span>
+
+<span class="sd">    # Загрузка схемы из JSON файла</span>
+<span class="sd">    schema = DataSchema.from_file(&#39;schemas/users.json&#39;)</span>
+
+<span class="sd">    # Создание схемы на основе DataFrame</span>
+<span class="sd">    df = pd.DataFrame({</span>
+<span class="sd">        &#39;id&#39;: [1, 2, 3],</span>
+<span class="sd">        &#39;age&#39;: [25, 30, 35],</span>
+<span class="sd">        &#39;email&#39;: [&#39;user1@example.com&#39;, &#39;user2@example.com&#39;, &#39;user3@example.com&#39;],</span>
+<span class="sd">        &#39;status&#39;: [&#39;active&#39;, &#39;inactive&#39;, &#39;active&#39;]</span>
+<span class="sd">    })</span>
+<span class="sd">    schema = DataSchema.from_dataframe(df)</span>
+
+<span class="sd">    # Сохранение схемы в YAML файл</span>
+<span class="sd">    schema.save(&#39;schemas/users.yaml&#39;)</span>
+
+<span class="sd">    # Применение схемы к DataFrame</span>
+<span class="sd">    df = schema.apply_to_dataframe(df)</span>
+
+<span class="sd">    # Получение информации о колонке</span>
+<span class="sd">    age_info = schema.get_column_info(&#39;age&#39;)</span>
+
+<span class="sd">    # Добавление новой колонки</span>
+<span class="sd">    schema.add_column(</span>
+<span class="sd">        name=&#39;created_at&#39;,</span>
+<span class="sd">        data_type=DataType.DATETIME,</span>
+<span class="sd">        required=True,</span>
+<span class="sd">        description=&#39;Дата создания записи&#39;</span>
+<span class="sd">    )</span>
+
+<span class="sd">    # Обновление информации о колонке</span>
+<span class="sd">    schema.update_column(&#39;age&#39;, required=False)</span>
+
+<span class="sd">    # Удаление колонки</span>
+<span class="sd">    schema.remove_column(&#39;created_at&#39;)</span>
+
+<span class="sd">    # Получение списка числовых колонок</span>
+<span class="sd">    numeric_columns = schema.get_columns_by_type(DataType.INTEGER)</span>
+
+<span class="sd">    # Получение сводной информации о схеме</span>
+<span class="sd">    summary_df = schema.summary()</span>
+<span class="sd">    ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="DataSchema.__init__">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.schema.DataSchema.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">columns</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">ColumnSchema</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">columns</span> <span class="ow">or</span> <span class="p">[]</span></div>
+
+    
+<div class="viewcode-block" id="DataSchema.from_file">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.schema.DataSchema.from_file">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;DataSchema&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Загружает схему из файла JSON или YAML.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        file_path : str</span>
+<span class="sd">            Путь к файлу схемы</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        DataSchema</span>
+<span class="sd">            Загруженная схема данных</span>
+<span class="sd">        </span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            Если формат файла не поддерживается</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">file_path</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ext</span> <span class="o">==</span> <span class="s1">&#39;.json&#39;</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;.yml&#39;</span><span class="p">,</span> <span class="s1">&#39;.yaml&#39;</span><span class="p">]:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Неподдерживаемый формат файла: </span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="n">columns</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">col_data</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;columns&#39;</span><span class="p">,</span> <span class="p">[]):</span>
+            <span class="n">col_schema</span> <span class="o">=</span> <span class="n">ColumnSchema</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">col_data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+                <span class="n">data_type</span><span class="o">=</span><span class="n">DataType</span><span class="p">(</span><span class="n">col_data</span><span class="p">[</span><span class="s1">&#39;data_type&#39;</span><span class="p">]),</span>
+                <span class="n">required</span><span class="o">=</span><span class="n">col_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;required&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+                <span class="n">description</span><span class="o">=</span><span class="n">col_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
+                <span class="n">categories</span><span class="o">=</span><span class="n">col_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;categories&#39;</span><span class="p">),</span>
+                <span class="n">constraints</span><span class="o">=</span><span class="n">col_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;constraints&#39;</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">columns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col_schema</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="DataSchema.from_dataframe">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.schema.DataSchema.from_dataframe">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_dataframe</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">sample_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;DataSchema&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Создает схему на основе анализа DataFrame.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        df : pd.DataFrame</span>
+<span class="sd">            DataFrame для анализа</span>
+<span class="sd">        sample_size : int, optional</span>
+<span class="sd">            Размер выборки для анализа, по умолчанию 1000</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        DataSchema</span>
+<span class="sd">            Созданная схема данных</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">columns</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="c1"># Определяем тип данных</span>
+            <span class="n">dtype</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span>
+            <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">is_integer_dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">):</span>
+                <span class="n">data_type</span> <span class="o">=</span> <span class="n">DataType</span><span class="o">.</span><span class="n">INTEGER</span>
+            <span class="k">elif</span> <span class="n">pd</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">is_float_dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">):</span>
+                <span class="n">data_type</span> <span class="o">=</span> <span class="n">DataType</span><span class="o">.</span><span class="n">FLOAT</span>
+            <span class="k">elif</span> <span class="n">pd</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">is_string_dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">):</span>
+                <span class="n">data_type</span> <span class="o">=</span> <span class="n">DataType</span><span class="o">.</span><span class="n">STRING</span>
+            <span class="k">elif</span> <span class="n">pd</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">is_datetime64_any_dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">):</span>
+                <span class="n">data_type</span> <span class="o">=</span> <span class="n">DataType</span><span class="o">.</span><span class="n">DATETIME</span>
+            <span class="k">elif</span> <span class="n">pd</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">is_bool_dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">):</span>
+                <span class="n">data_type</span> <span class="o">=</span> <span class="n">DataType</span><span class="o">.</span><span class="n">BOOLEAN</span>
+            <span class="k">elif</span> <span class="n">pd</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">is_categorical_dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">):</span>
+                <span class="n">data_type</span> <span class="o">=</span> <span class="n">DataType</span><span class="o">.</span><span class="n">CATEGORICAL</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">data_type</span> <span class="o">=</span> <span class="n">DataType</span><span class="o">.</span><span class="n">STRING</span>
+            
+            <span class="c1"># Создаем схему колонки</span>
+            <span class="n">col_schema</span> <span class="o">=</span> <span class="n">ColumnSchema</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">col</span><span class="p">,</span>
+                <span class="n">data_type</span><span class="o">=</span><span class="n">data_type</span><span class="p">,</span>
+                <span class="n">required</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="n">description</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Колонка </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">categories</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="k">if</span> <span class="n">data_type</span> <span class="o">==</span> <span class="n">DataType</span><span class="o">.</span><span class="n">CATEGORICAL</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">constraints</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s1">&#39;min&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">is_numeric_dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">())</span> <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">is_numeric_dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="s1">&#39;unique&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+            <span class="n">columns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col_schema</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="DataSchema.save">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.schema.DataSchema.save">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Сохраняет схему в файл JSON или YAML.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        file_path : str</span>
+<span class="sd">            Путь к файлу для сохранения</span>
+<span class="sd">        </span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            Если формат файла не поддерживается</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">file_path</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;columns&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">col</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="s1">&#39;data_type&#39;</span><span class="p">:</span> <span class="n">col</span><span class="o">.</span><span class="n">data_type</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                    <span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="n">col</span><span class="o">.</span><span class="n">required</span><span class="p">,</span>
+                    <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="n">col</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+                    <span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="n">col</span><span class="o">.</span><span class="n">categories</span><span class="p">,</span>
+                    <span class="s1">&#39;constraints&#39;</span><span class="p">:</span> <span class="n">col</span><span class="o">.</span><span class="n">constraints</span>
+                <span class="p">}</span>
+                <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+        
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ext</span> <span class="o">==</span> <span class="s1">&#39;.json&#39;</span><span class="p">:</span>
+                <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;.yml&#39;</span><span class="p">,</span> <span class="s1">&#39;.yaml&#39;</span><span class="p">]:</span>
+                <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">allow_unicode</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Неподдерживаемый формат файла: </span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="DataSchema.apply_to_dataframe">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.schema.DataSchema.apply_to_dataframe">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">apply_to_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Применяет схему к DataFrame.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        df : pd.DataFrame</span>
+<span class="sd">            DataFrame для преобразования</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            DataFrame с примененной схемой</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">col_schema</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">col_schema</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="n">df</span><span class="p">[</span><span class="n">col_schema</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_column_type</span><span class="p">(</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col_schema</span><span class="o">.</span><span class="n">name</span><span class="p">],</span>
+                    <span class="n">col_schema</span><span class="o">.</span><span class="n">data_type</span>
+                <span class="p">)</span>
+        <span class="k">return</span> <span class="n">df</span></div>
+
+    
+<div class="viewcode-block" id="DataSchema._convert_column_type">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.schema.DataSchema._convert_column_type">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_convert_column_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">series</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">data_type</span><span class="p">:</span> <span class="n">DataType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Преобразует тип данных колонки.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        series : pd.Series</span>
+<span class="sd">            Серия данных для преобразования</span>
+<span class="sd">        data_type : DataType</span>
+<span class="sd">            Целевой тип данных</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.Series</span>
+<span class="sd">            Серия с преобразованным типом данных</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">data_type</span> <span class="o">==</span> <span class="n">DataType</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;coerce&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;Int64&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">data_type</span> <span class="o">==</span> <span class="n">DataType</span><span class="o">.</span><span class="n">FLOAT</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;coerce&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">data_type</span> <span class="o">==</span> <span class="n">DataType</span><span class="o">.</span><span class="n">STRING</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">series</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">data_type</span> <span class="o">==</span> <span class="n">DataType</span><span class="o">.</span><span class="n">DATETIME</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;coerce&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">data_type</span> <span class="o">==</span> <span class="n">DataType</span><span class="o">.</span><span class="n">BOOLEAN</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">series</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">data_type</span> <span class="o">==</span> <span class="n">DataType</span><span class="o">.</span><span class="n">CATEGORICAL</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">series</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">series</span></div>
+
+    
+<div class="viewcode-block" id="DataSchema.get_column_info">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.schema.DataSchema.get_column_info">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_column_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ColumnSchema</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Получает информацию о колонке.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        column : str</span>
+<span class="sd">            Имя колонки</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Optional[ColumnSchema]</span>
+<span class="sd">            Схема колонки или None, если колонка не найдена</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">column</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">col</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+    
+<div class="viewcode-block" id="DataSchema.add_column">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.schema.DataSchema.add_column">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data_type</span><span class="p">:</span> <span class="n">DataType</span><span class="p">,</span> <span class="n">required</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                  <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">categories</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                  <span class="n">constraints</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Добавляет колонку в схему.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        column : str</span>
+<span class="sd">            Имя колонки</span>
+<span class="sd">        data_type : DataType</span>
+<span class="sd">            Тип данных</span>
+<span class="sd">        required : bool, optional</span>
+<span class="sd">            Флаг обязательности, по умолчанию False</span>
+<span class="sd">        description : str, optional</span>
+<span class="sd">            Описание колонки, по умолчанию пустая строка</span>
+<span class="sd">        categories : List[str], optional</span>
+<span class="sd">            Список категорий</span>
+<span class="sd">        constraints : Dict[str, Any], optional</span>
+<span class="sd">            Ограничения на значения</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">col_schema</span> <span class="o">=</span> <span class="n">ColumnSchema</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">column</span><span class="p">,</span>
+            <span class="n">data_type</span><span class="o">=</span><span class="n">data_type</span><span class="p">,</span>
+            <span class="n">required</span><span class="o">=</span><span class="n">required</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+            <span class="n">categories</span><span class="o">=</span><span class="n">categories</span><span class="p">,</span>
+            <span class="n">constraints</span><span class="o">=</span><span class="n">constraints</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col_schema</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="DataSchema.update_column">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.schema.DataSchema.update_column">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Обновляет информацию о колонке.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        column : str</span>
+<span class="sd">            Имя колонки</span>
+<span class="sd">        **kwargs</span>
+<span class="sd">            Параметры для обновления</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">column</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="nb">setattr</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+                <span class="k">break</span></div>
+
+    
+<div class="viewcode-block" id="DataSchema.remove_column">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.schema.DataSchema.remove_column">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Удаляет колонку из схемы.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        column : str</span>
+<span class="sd">            Имя колонки</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="n">column</span><span class="p">]</span></div>
+
+    
+<div class="viewcode-block" id="DataSchema.get_columns_by_type">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.schema.DataSchema.get_columns_by_type">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_columns_by_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_type</span><span class="p">:</span> <span class="n">DataType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Получает список колонок заданного типа.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data_type : DataType</span>
+<span class="sd">            Тип данных</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[str]</span>
+<span class="sd">            Список имен колонок</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">col</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">data_type</span> <span class="o">==</span> <span class="n">data_type</span><span class="p">]</span></div>
+
+    
+<div class="viewcode-block" id="DataSchema.__str__">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.schema.DataSchema.__str__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Возвращает строковое представление схемы.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            Строковое представление схемы</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;DataSchema(columns=</span><span class="si">{</span><span class="p">[</span><span class="n">col</span><span class="o">.</span><span class="n">name</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span></div>
+
+    
+<div class="viewcode-block" id="DataSchema.summary">
+<a class="viewcode-back" href="../../../modules/data.html#core.data.schema.DataSchema.summary">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Возвращает сводную информацию о схеме.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            DataFrame с информацией о колонках</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">col</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="s1">&#39;data_type&#39;</span><span class="p">:</span> <span class="n">col</span><span class="o">.</span><span class="n">data_type</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="n">col</span><span class="o">.</span><span class="n">required</span><span class="p">,</span>
+                <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="n">col</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+                <span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="n">col</span><span class="o">.</span><span class="n">categories</span><span class="p">,</span>
+                <span class="s1">&#39;constraints&#39;</span><span class="p">:</span> <span class="n">col</span><span class="o">.</span><span class="n">constraints</span>
+            <span class="p">})</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> </div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, GPB Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
