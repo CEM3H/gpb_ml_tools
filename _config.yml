@@ -1,11 +1,3 @@
 theme: jekyll-theme-cayman
-remote_theme: pages-themes/cayman@v0.2.0
-plugins:
-- jekyll-remote-theme
 title: GPB Machine Learning Tools
-description: Библиотека для работы с данными и машинного обучения
-show_downloads: true
-github:
-  repository_url: https://github.com/CEM3H/gpb_ml_tools
-  zip_url: https://github.com/CEM3H/gpb_ml_tools/archive/main.zip
-  tar_url: https://github.com/CEM3H/gpb_ml_tools/archive/main.tar.gz
+description: Библиотека для работы с данными и машинного обучения 
